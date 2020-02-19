@@ -1,0 +1,188 @@
+##############################
+# 3RD MENU
+##############################
+  - title: Weather/Thermo Conditions
+    panel: true
+    path: weather_condition
+    icon: 'mdi:thermostat'
+    cards:
+
+      - type: vertical-stack
+        cards:
+          ##############################
+          # RIGA 1
+          ##############################
+          - type: horizontal-stack 
+            cards:
+              ##############################
+              # COLONNA 1
+              ##############################
+              - type: entities
+                title: Weather Conditions
+                show_header_toggle: false
+                entities:
+                  - entity: sensor.avgtempthermo
+                    name: TempAVG thermo
+                    icon: 'mdi:water-boiler'
+                  - entity: sensor.temperature_158d00xxx
+                    name: TempIngresso
+                  - type: divider
+                    style:
+                      height: 2px
+                      width: 95%
+                      margin-left: auto
+                      margin-right: auto
+                      background: '#03A9F4'
+                  - entity: sensor.temperature_158d00xxx
+                    name: TempExt
+                  - entity: sensor.humidity_158d00xxx
+                    name: HumExt
+                  - entity: sensor.pressure_158d00xxx
+                    name: PressExt
+
+              ##############################
+              # COLONNA 2
+              ##############################
+              - type: thermostat
+                entity: climate.generic_thermo
+
+              ##############################
+              # COLONNA 3
+              ##############################
+              - type: vertical-stack
+                cards:
+                  ##############################
+                  # RIGA 1
+                  ##############################
+                  - type: entities
+                    title: Thermostat Mode
+                    show_header_toggle: false
+                    state_color: true
+                    entities:
+                      - input_boolean.auto_mode
+                      - input_boolean.away_mode
+                      - input_number.setpoint
+
+                  ##############################
+                  # RIGA 2
+                  ##############################
+                  - type: conditional
+                    conditions:
+                      - entity: input_boolean.auto_mode
+                        state: "on"
+                    card:
+                      type: entities
+                      title: Scheduler Mode
+                      show_header_toggle: false
+                      state_color: true
+                      entities:
+                        - input_boolean.weekend_on
+                        - input_number.temp_high
+                        - input_number.temp_low
+
+          ##############################
+          # RIGA 2
+          ##############################
+          - type: horizontal-stack 
+            cards:
+              ##############################
+              # COLONNA 1
+              ##############################
+              - type: entities
+                title: Thermo Switch Info
+                show_header_toggle: false
+                state_color: true
+                entities:
+                  - entity: sensor.thermo_switch_last_24h
+                    name: 'Thermo Switch Last 24 (history_stats)'
+                  - entity: sensor.template_thermo_switch_last_24h
+                    name: 'Template Switch Last 24h'
+                  - type: divider
+                  - entity: sensor.thermo_switch_today
+                    name: 'Template Switch today (history_stats)'
+                  - entity: sensor.template_thermo_switch_today
+                    name: 'Template Switch Today'
+                  - type: divider
+                  - entity: input_datetime.period_thermo_on
+                    name: '*Last DateTime ON*'
+                  - entity: input_datetime.period_thermo_off
+                    name: '*Last DateTime OFF*' 
+                  - sensor.template_period_thermo
+                  - type: divider
+                    style:
+                      height: 2px
+                      width: 95%
+                      margin-left: auto
+                      margin-right: auto
+                      background: '#03A9F4'
+                  - sensor.template_thermo_switch_uptime
+                  - entity: sensor.shelly_shsw_1_XXXXXX_uptime_attr
+                    name: Thermo Switch Uptime
+                  - switch.shelly_shsw_1_XXXXXX
+                  - binary_sensor.shelly_shsw_1_XXXXXX_switch
+
+
+              ##############################
+              # COLONNA 2
+              ##############################
+              - type: custom:mini-graph-card
+                name: Temps
+                icon: 'mdi:temperature-celsius'
+                group: false
+                hours_to_show: 24
+                points_per_hour: 1
+                group_by: interval
+                animate: false
+                height: 230
+                line_width: 4
+                decimals: 1
+                hour24: true
+                font_size: 100
+                font_size_header: 24
+                align_header: center
+                align_state: center
+                smoothing: true
+                entities:
+                  - entity: sensor.temperature_158XXXXXX
+                    name: Temp Ingresso
+                    color: '#FFFFFF'
+                    unit: '°C'
+                    show_state: true
+                    show_indicator: true
+                    show_graph: true
+                    show_line: true
+                    show_fill: true
+                    show_points: true
+                    show_legend: true
+                    state_adaptive_color: true
+                  - entity: sensor.avgtempall
+                    name: AVG Temp ALL
+                    color: '#FF2A00'
+                    show_state: true
+                    show_indicator: true
+                    show_graph: true
+                    show_line: true
+                    show_fill: true
+                    show_points: true
+                    show_legend: true
+                    state_adaptive_color: true
+                  - entity: sensor.avgtempthermo
+                    name: AVG Temp Thermo
+                    show_state: true
+                    color: '#ff6600'
+                    show_indicator: true
+                    show_line: true
+                    show_fill: true
+                    show_points: true
+                    show_legend: true
+                    state_adaptive_color: true
+                  - entity: sensor.temperature_158XXXXXX
+                    name: Temp Ext
+                    show_state: true
+                    color: '#03A9F4'
+                    show_indicator: true
+                    show_line: true
+                    show_fill: true
+                    show_points: true
+                    show_legend: true
+                    state_adaptive_color: true
