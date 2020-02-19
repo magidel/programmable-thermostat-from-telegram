@@ -1,0 +1,689 @@
+###########################################################################################################
+### Packages Thermo
+###########################################################################################################
+
+###########################################################################################################
+### Customize
+###########################################################################################################
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        Package: ---Thermo---
+        Creato da: MaGiDeL
+        Creato per: HassioHelp
+
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+###########################################################################################################
+## INPUT
+###########################################################################################################
+input_number:
+  temp_high:
+    name: HighTarget
+    min: 15
+    max: 22
+    step: 0.5
+  temp_low:
+    name: LowTarget
+    min: 15
+    max: 22
+    step: 0.5
+  setpoint:
+    name: SetPoint
+    min: 15
+    max: 22
+    step: 0.5
+
+input_datetime:
+  period_thermo_on:
+    name: Period Thermo Start
+    has_date: true
+    has_time: true
+  period_thermo_off:
+    name: Period Thermo Stop
+    has_date: true
+    has_time: true
+
+input_boolean:
+  weekend_on:
+    name: Weekend At Home
+    initial: off
+    icon: mdi:calendar-week
+  auto_mode:
+    name: Auto Mode
+    initial: on
+    icon: mdi:brightness-auto
+  away_mode:
+    name: away mode
+    icon: mdi:home-remove
+
+###########################################################################################################
+### CLIMATE
+###########################################################################################################
+climate:
+  - platform: generic_thermostat
+    name: Generic Thermo
+    heater: switch.shelly_shsw_1_XXXXXX
+    target_sensor: sensor.avgtempthermo
+    min_temp: 17
+    max_temp: 20
+    target_temp: 19.5
+    ac_mode: false
+    min_cycle_duration:
+      seconds: 5
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    away_temp: 15
+    hot_tolerance: 0
+
+
+###########################################################################################################
+### SENSORS
+###########################################################################################################
+sensor:
+  ########################################################################
+  ### THERMO Timer last 24
+  ########################################################################
+  - platform: history_stats
+    name: Thermo Switch (last 24h)
+    entity_id: switch.shelly_shsw_1_XXXXXX
+    state: 'on'
+    type: time
+    end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    duration:
+      hours: 24
+  
+  - platform: template
+    sensors:
+      template_thermo_switch_last_24h:
+        friendly_name: "Template Thermo Switch last 24h"
+        icon_template: "mdi:timer"
+        value_template: "{{ states('sensor.thermo_switch_last_24h') | multiply(3600) | timestamp_custom('%H:%M:%S', 0) }}"
+
+  ########################################################################
+  ### THERMO Timer Today
+  ########################################################################
+  - platform: history_stats
+    name: Thermo Switch Today
+    entity_id: switch.shelly_shsw_1_XXXXXX
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+
+  - platform: template
+    sensors:
+      template_thermo_switch_today:
+        friendly_name: "Template Thermo Switch today"
+        icon_template: "mdi:timer"
+        value_template: "{{ states('sensor.thermo_switch_today') | multiply(3600) | timestamp_custom('%H:%M:%S', 0) }}"
+
+  ########################################################################
+  - platform: template
+    sensors:
+      template_period_thermo:
+        friendly_name: "Last Period Thermo Switch ON"
+        icon_template: "mdi:timer"
+        value_template: >-
+          {{ ((state_attr('input_datetime.period_thermo_off', 'timestamp')) - (state_attr('input_datetime.period_thermo_on', 'timestamp'))) | int | timestamp_custom('%H:%M:%S', 0) }}
+
+
+  ########################################################################
+  ### THERMO Uptime
+  ########################################################################
+  - platform: template
+    sensors:
+      template_thermo_switch_uptime:
+        friendly_name: 'Template Thermo Switch Uptime'
+        icon_template: "mdi:timer"
+        value_template: >-
+  
+          {%- set time = states('sensor.shelly_shsw_1_XXXXXX_uptime_attr') | int  %}
+          {%- set seconds = ((time % 60) // 1) %}
+          {%- set seconds = '{}s '.format(seconds) if seconds > 0 else '' %}
+          {%- set minutes = ((time % 3600) // 60) %}
+          {%- set minutes = '{}m '.format(minutes) if minutes > 0 else '' %}
+          {%- set hours = ((time % 86400) // 3600) %}
+          {%- set hours = '{}h '.format(hours) if hours > 0 else '' %}
+          {%- set days = (time // 86400) %}
+          {%- set days = '{}d '.format(days) if days > 0 else '' %}
+          {{ 'Less than 1 minute' if time < 60 else days + hours + minutes + seconds }}ago
+
+
+###########################################################################################################
+### BINARY_SENSORS
+###########################################################################################################
+binary_sensor:
+  - platform: rest
+    resource: http://xxx.xxx.xxx.xxx/status
+    name: Shelly Thermo MQTT Connected
+    value_template: "{{ value_json['mqtt'].connected }}"
+    username: !secret usr_shelly
+    password: !secret psw_shelly
+  
+  - platform: rest
+    resource: http://xxx.xxx.xxx.xxx/status
+    name: Shelly Thermo Cloud connected
+    value_template: "{{ value_json['cloud'].connected }}"
+    username: !secret usr_shelly
+    password: !secret psw_shelly
+
+
+
+
+
+###########################################################################################################
+### AUTOMATION for python script
+###########################################################################################################
+automation:
+  - alias: Thermo AUTO Mode
+    initial_state: True
+    trigger:
+      - platform: time_pattern
+        minutes: '/5' # ogni 5 minuti
+      - platform: homeassistant
+        event: start
+    condition:
+        condition: state
+        entity_id: input_boolean.auto_mode
+        state: 'on'
+    action:
+      service: python_script.scheduler_auto
+
+  - alias: Thermo MANUAL Mode
+    initial_state: True
+    trigger:
+      - platform: time_pattern
+        minutes: '/5' # ogni 5 minuti
+      - platform: homeassistant
+        event: start
+    condition:
+        condition: state
+        entity_id: input_boolean.auto_mode
+        state: 'off'
+    action:
+      service: python_script.scheduler_manual
+
+########################################################################
+  - alias: Notify Thermo Switch ON
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: switch.shelly_shsw_1_XXXXXX
+        from: 'off'
+        to: 'on'
+      - platform: state
+        entity_id: climate.generic_thermo
+        from: 'off'
+        to: 'heat'
+    condition:
+        condition: state
+        entity_id: input_boolean.auto_mode
+        state: 'on'
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.period_thermo_on
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          title: '--- *Thermo Switch/Climate start by scheduler* ---'
+          message: |-
+            
+            
+            {{ "\U0001F525" }} *Thermo Switch ON*
+            
+            Set temp at: {{ states('input_number.temp_high') }} °C (current temp: {{ states('sensor.avgtempthermo') }} °C)
+            
+            state Thermo Switch: {{ states('switch.shelly_shsw_1_XXXXXX') }} at {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+
+########################################################################
+  - alias: Notify Thermo Switch OFF
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: switch.shelly_shsw_1_XXXXXX
+        from: 'on'
+        to: 'off'
+      - platform: state
+        entity_id: climate.generic_thermo
+        from: 'heat'
+        to: 'off'
+    condition:
+      condition: state
+      entity_id: input_boolean.auto_mode
+      state: 'on'
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.period_thermo_off
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          title: '--- *Thermo Switch/Climate stop by scheduler* ---'
+          message: |-
+            
+            
+            {{ "\u2744\ufe0f" }} *Thermo Switch OFF*
+            
+            Set temp at: {{ states('input_number.temp_low') }} °C (current temp: {{ states('sensor.avgtempthermo') }} °C)
+            
+            state Thermo Switch: {{ states('switch.shelly_shsw_1_XXXXXX') }} at {{ states('input_datetime.period_thermo_off') }}
+            
+            Period Thermo ON: {{ states('sensor.template_period_thermo') }}
+
+
+
+###########################################################################################################
+### BUTTON TELEGRAM
+###########################################################################################################
+########################################################################
+### THERMO General
+########################################################################
+  - alias: Button Bot Thermo
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermo
+    action:
+      - service: notify.telegram
+        data_template:
+          # title: 
+          message: |-
+            
+            {{ "\U0001F341" }} *Thermo Management*
+            
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_XXXXXX') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            
+            ----------------------------------------------------------
+            state *Auto Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Weekend At Home*: {{ states('input_boolean.weekend_on') }}
+            state *Away mode*: {{ states('input_boolean.away_mode') }}
+            
+            ----------------------------------------------------------
+            *Last Period Thermo Switch ON*: {{ states('sensor.template_period_thermo') }}
+            *Yestarday (Last 24h)*: {{ states('sensor.template_thermo_switch_last_24h') }}
+            *Today (00:00 - now)*: {{ states('sensor.template_thermo_switch_today') }}
+            
+            ----------------------------------------------------------
+            *TempExt*: {{ states('sensor.temperature_XXXXXX') }} °C
+            *Temp AVG Thermo*: {{ states('sensor.avgtempthermo') }} °C
+            
+            ----------------------------------------------------------
+            *Temp SetPoint*: {{ states('input_number.setpoint') }} °C
+            *Temp HighTarget*: {{ states('input_number.temp_high') }} °C
+            *Temp LowTarget*: {{ states('input_number.temp_low') }} °C
+            
+            Choose your command
+          data:
+            inline_keyboard:
+            - '{{ "\U0001F4DF" }} ThermoAUTO:/thermoauto, {{ "\U0001F91A" }} ThermoMANUAL:/thermomanual'
+            - '{{ "\U0001F170" }} AwayMode:/away, {{ "\U0001F6D1" }} TurnOFFClimate:/offclimate'
+            - '{{ "\u21a9\ufe0f" }} Home:/home'
+
+########################################################################
+### ThermoAUTO
+########################################################################
+  - alias: Button Thermo AUTO
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermoauto
+    action:
+      - service: climate.turn_on
+        entity_id: climate.generic_thermo
+      - delay: '00:00:01'
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_on
+        entity_id: automation.thermo_auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_manual_mode
+      - delay: '00:00:01'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F4DF" }} *Thermo AUTO ON*
+            input_boolean.auto_mode = ON
+            
+            state *Auto Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_XXXXXX') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            state *Weekend At Home*: {{ states('input_boolean.weekend_on') }}
+            -----------------------------------------------------------------
+            *tempHigh*: {{ states('input_number.temp_high') }} °C
+            *tempLow*: {{ states('input_number.temp_low') }} °C
+            Datetime: {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          data:
+            inline_keyboard:
+              - '{{ "\U0001F3E1" }} Weekend at Home:/weekendon'
+              - '{{ "\u2795\ufe0f" }} +tempHigh:/temphighplus, {{ "\u2796\ufe0f" }} -tempHigh:/temphighminus'
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+####################################################################### 
+  - alias: Button Thermo WeekendON
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /weekendon
+    action:
+      - service: input_boolean.toggle
+        data:
+          entity_id: input_boolean.weekend_on
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\U0001F3E1" }} *Weekend at Home*
+            
+            state *Weekend at Home*: {{ states('input_boolean.weekend_on') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermoauto, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+
+####################################################################### 
+  - alias: Button tempHigh increment
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /temphighplus
+    action:
+      - service: input_number.increment
+        data:
+          entity_id: input_number.temp_high
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\u2795\ufe0f" }} {{ "\U0001F4C8" }} *+tempHigh*
+            
+            tempHigh: {{ states('input_number.temp_high') }} °C
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermoauto, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+####################################################################### 
+  - alias: Button tempHigh decrement
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /temphighminus
+    action:
+      - service: input_number.decrement
+        data:
+          entity_id: input_number.temp_high
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\u2796\ufe0f" }} {{ "\U0001F4C9" }} *-tempHigh*
+            
+            tempHigh: {{ states('input_number.temp_high') }} °C
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermoauto, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+########################################################################
+### ThermoMANUAL
+########################################################################
+  - alias: Button Thermo MANUAL
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermomanual
+    action:
+      - service: climate.turn_on
+        entity_id: climate.generic_thermo
+      - delay: '00:00:01'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_on
+        entity_id: automation.thermo_manual_mode
+      - delay: '00:00:01'
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.setpoint
+          value: 19.5 #QUI SI PUO' MODIFICARE LA TEMPERATURA DI SETPOINT
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F91A" }} *Thermo MANUAL ON*
+            input_boolean.auto_mode = OFF
+            
+            state *Auto Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_XXXXXX') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            -----------------------------------------------------------------
+            *SetPoint*: {{ states('input_number.setpoint') }} °C
+            Datetime: {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2705\ufe0f" }} ThermoON:/thermoon, {{ "\u274c\ufe0f" }} ThermoOff:/thermooff'
+              - '{{ "\u2795\ufe0f" }} +SetPoint:/increment, {{ "\u2796\ufe0f" }} -SetPoint:/decrement'
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+####################################################################### 
+  - alias: Button Thermo ON
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermoon
+    action:
+      - service: switch.turn_on
+        entity_id: switch.shelly_shsw_1_XXXXXX
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F525" }} *Thermo switch ON*
+            
+            state Thermo Switch: {{ states('switch.shelly_shsw_1_XXXXXX') }} at {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+####################################################################### 
+  - alias: Button Thermo OFF
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermooff
+    action:
+      - service: switch.turn_off
+        entity_id: switch.shelly_shsw_1_XXXXXX
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\u2744\ufe0f" }} *Thermo Switch OFF* 
+            
+            state Thermo: {{ states('switch.shelly_shsw_1_XXXXXX') }} at {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+####################################################################### 
+  - alias: Button SetPoint increment
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /increment
+    action:
+      - service: input_number.increment
+        data:
+          entity_id: input_number.setpoint
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\u2795\ufe0f" }} {{ "\U0001F4C8" }} *+SetPoint*
+            
+            state SetPoint: {{ states('input_number.setpoint') }} °C
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+####################################################################### 
+  - alias: Button SetPoint decrement
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /decrement
+    action:
+      - service: input_number.decrement
+        data:
+          entity_id: input_number.setpoint
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\u2796\ufe0f" }} {{ "\U0001F4C9" }} *-SetPoint*
+            
+            state SetPoint: {{ states('input_number.setpoint') }} °C
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+########################################################################
+### AwayMode
+########################################################################
+  - alias: Button Thermo AWAY
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /away
+    action:
+      - service: climate.turn_on
+        entity_id: climate.generic_thermo
+      - delay: '00:00:01'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_on
+        entity_id: automation.thermo_manual_mode
+      - delay: '00:00:01'
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.setpoint
+          value: 17 #QUI SI PUO' MODIFICARE LA TEMPERATURA DI SETPOINT
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F91A" }} *Thermo AWAY MODE*
+            input_boolean.auto_mode = OFF
+            
+            state *Auto Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_XXXXXX') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            state *Away mode*: {{ states('input_boolean.away_mode') }}
+            -----------------------------------------------------------------
+            *SetPoint*: {{ states('input_number.setpoint') }} Â°C
+            Datetime: {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+########################################################################
+### TurnOFFClimate
+########################################################################
+  - alias: Button Thermo AWAY
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /offclimate
+    action:
+      - service: climate.turn_off
+        entity_id: climate.generic_thermo
+      - delay: '00:00:01'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_manual_mode
+      - delay: '00:00:01'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F91A" }} *Thermo Climate OFF*
+            
+            state *Auto Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_XXXXXX') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            state *Away mode*: {{ states('input_boolean.away_mode') }}
+            state *Automation auto*: {{ states('automation.thermo_auto_mode') }}
+            state *Automation manual*: {{ states('automation.thermo_manual_mode') }}
+            
+            -----------------------------------------------------------------
+            *SetPoint*: {{ states('input_number.setpoint') }} Â°C
+            Datetime: {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
