@@ -13,18 +13,19 @@
 ## Versione 2.0
 In this second version I added two operating modes:
 
-- AWAY Mode (the reference temperature is off and set at 17 ° C, therefore as if it were manual, but with a different set Point temperature. The latter temperature can be changed by the automation)
+- AWAY Mode (I am away from home and the reference temperature is set at 17° C, therefore as if it were manual, but with a different setPoint temperature. This temperature can be changed in the automation code)
 - TurnOFF (I turn everything off, from climate to automation)
 
 The package has been updated as well as the part of the telegram buttons and finally the lovelace part.
 
 In detail.
 An _input_boolean.away_mode_ has been added, which defines or not the away mode
-In the first version, a history_stats sensor was introduced, referring to the period of heating of the radiators in the last 24 hours, that is to say yesterday.
+In the first version, a history_stats sensor was introduced, referring to the period of heating of the radiators in the last 24 hours, namely _yesterday_.
 Thus, from this sensor, the template was created, readable on a human level indicating _hh:mm:ss_.
+
 With the update, another history_stats sensor has been added for a personal need.
-This time the count is from midnight on the current day until the moment I request this value, _00:00 - now_ so to speak!
-This also has its own template below, for a human vision.
+This time the count is from midnight of the current day until the moment I request this value, _00:00-now_, so to speak!
+This also has its own template below, for a human level.
 
 The _uptime sensor_ and the two _binary_sensor_ used to know the cloud or MQTT mode of the **Shelly1** have been left unchanged, a device used as a clean contact for ignition and burial of the boiler.
 
