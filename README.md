@@ -16,6 +16,9 @@ In the lovelace UI one mode excludes the other with relative notification on tel
 
 ![Notification](https://i.imgur.com/EbVYXDp.jpg)
 
+In addition, an automation activates the AUTO mode when Hassio starts.
+
+The modality can be changed through Telegram or the Lovelace UI.
 
 ## Versione 2.0
 In this second version I added two operating modes:
