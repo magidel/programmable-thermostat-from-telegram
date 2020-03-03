@@ -8,10 +8,15 @@
 
 # Programmable thermostat from Telegram
 
-![Lovelace](https://i.imgur.com/FcgOm4I.jpg)
+## Versione 3.0
+In this third version I added input_text to view the activated mode (AUTO, MANUAL, AWAY) and I fixed the lovelace UI:
+![Lovelace](https://i.imgur.com/iay7st0.jpg)
+
 
 ## Versione 2.0
 In this second version I added two operating modes:
+
+![Lovelace](https://i.imgur.com/FcgOm4I.jpg)
 
 - AWAY Mode (I am away from home and the reference temperature is set at 17° C, therefore as if it were manual, but with a different setPoint temperature. This temperature can be changed in the automation code)
 - TurnOFF (I turn everything off, from climate to automation)
