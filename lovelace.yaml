@@ -61,6 +61,7 @@
                     entities:
                       - input_boolean.auto_mode
                       - input_boolean.away_mode
+                      - input_text.modality
                       - input_number.setpoint
 
                   ##############################
@@ -77,6 +78,7 @@
                       state_color: true
                       entities:
                         - input_boolean.weekend_on
+                        - input_boolean.boost_mode
                         - input_number.temp_high
                         - input_number.temp_low
 
