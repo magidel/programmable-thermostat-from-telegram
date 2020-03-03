@@ -17,7 +17,7 @@ WEEKEND_ON_SCHEDULE = [
 now = datetime.datetime.now().time()
 if datetime.datetime.now().date().weekday() < 5:
     current_schedule = WEEK_SCHEDULE
-elif WEEKEND_ON == 'on':
+elif WEEKEND_ON.state == 'on':
     current_schedule = WEEKEND_ON_SCHEDULE
 else:
     current_schedule = WEEKEND_OFF_SCHEDULE
