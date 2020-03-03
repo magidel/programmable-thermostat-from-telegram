@@ -12,6 +12,10 @@
 In this third version I added input_text to view the activated mode (AUTO, MANUAL, AWAY) and I fixed the lovelace UI:
 ![Lovelace](https://i.imgur.com/uB6txID.jpg)
 
+In the lovelace UI one mode excludes the other with relative notification on telegram:
+
+![Notification](https://i.imgur.com/EbVYXDp.jpg)
+
 
 ## Versione 2.0
 In this second version I added two operating modes:
