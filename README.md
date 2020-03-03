@@ -27,6 +27,7 @@ The modality can be changed through Telegram or the Lovelace UI.
 |    --    |    --    |
 |  ![buttonTelegram](https://i.imgur.com/j2np8rg.jpg)  |  ![buttonTelegram](https://i.imgur.com/lWp1bKw.jpg)  |
 
+#### I always remind you to change the entities of your devices (climate, temperature sensors, switches ...)
 
 ## Versione 2.0
 In this second version I added two operating modes:
