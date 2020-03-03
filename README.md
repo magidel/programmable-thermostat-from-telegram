@@ -10,7 +10,7 @@
 
 ## Versione 3.0
 In this third version I added input_text to view the activated mode (AUTO, MANUAL, AWAY) and I fixed the lovelace UI:
-![Lovelace](https://i.imgur.com/iay7st0.jpg)
+![Lovelace](https://i.imgur.com/uB6txID.jpg)
 
 
 ## Versione 2.0
