@@ -9,7 +9,10 @@
 # Programmable thermostat from Telegram
 
 ## Versione 3.0
-In this third version I added input_text to view the activated mode (AUTO, MANUAL, AWAY) and I fixed the lovelace UI:
+In this third version I added:
+- input_text to view the activated mode (AUTO, MANUAL, AWAY)
+- Boost mode, increase HighTarget in AUTO mode by +0.5°C from 19.00 to 08.00 everyday (temperature increase for my wife ;) )
+- I fixed the lovelace UI:
 ![Lovelace](https://i.imgur.com/uB6txID.jpg)
 
 In the lovelace UI one mode excludes the other with relative notification on telegram:
@@ -17,8 +20,13 @@ In the lovelace UI one mode excludes the other with relative notification on tel
 ![Notification](https://i.imgur.com/EbVYXDp.jpg)
 
 In addition, an automation activates the AUTO mode when Hassio starts.
-
 The modality can be changed through Telegram or the Lovelace UI.
+
+### Telegram screens
+| main screen | AUTO mode |
+|    --    |    --    |
+|  ![buttonTelegram](https://i.imgur.com/j2np8rg.jpg)  |  ![buttonTelegram](https://i.imgur.com/lWp1bKw.jpg)  |
+
 
 ## Versione 2.0
 In this second version I added two operating modes:
