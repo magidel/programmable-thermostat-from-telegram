@@ -8,6 +8,50 @@
 
 # Programmable thermostat from Telegram
 
+## Versione 3.5
+Mostly bug fixes !!
+I wanted to fix some flaws:
+
+- #### Initialization of input_boolean ("auto_mode" and "weekend_on").
+  This involved the automatic ignition of the boiler at each restart, if hassio was in MANUAL mode.
+  Restarted in AUTO mode did not happen.
+
+
+- #### Delete Climate.target_temp 
+  In the definition of the climate entity I have eliminated "target_temp".
+  In the above case it imposed its initialisation temperature, "disturbing" the MANUAL mode.
+  No problem because when choosing a mode the reference temperature will be set directly from the mode itself.
+
+
+- #### Automation "alias: Thermo Start"
+  I eliminated the first automation, the one that forced input_boolean.auto_mode = "ON" when starting Hassio.
+  Now the system restarts leaving the previously chosen mode unchanged.
+
+
+- #### Automation "alias: Thermo AUTO Mode"
+  Unlike before, the initial state is now OFF.
+  There is no longer the "homeassistant start" option in the trigger.
+
+
+- #### Automation "Thermo MANUAL Mode"
+  The initial OFF state remains.
+  In the trigger, input_boolean.auto_mode OFF has been deleted.
+  The python_script.scheduler_manual is no longer launched, but the action sets the reference temperature directly, therefore one script less !!!
+  Moreover, it was useless as summing up the script only set the temperature of the climate entity, unlike the AUTO script which had set days and times.
+
+
+- #### Automation "alias: Thermo AUTO Mode", "alias: Thermo AWAY Mode", "alias: Thermo MANUAL Mode"
+  In previous versions I have privileged the interface of Telegram buttons.
+  In this version I have dedicated myself to Lovelace's own interface.
+  With these 3 automations I indicate what to enable and what to disable between input_boolean and automations when I enable or disable the mode switches from the UI.
+
+
+- #### Automation "alias: BoostSetPoint"
+  I realized that the BoostSetPoint automations had the same alias.
+  Now they are called "BoostSetPointIncrement" and "BoostSetPointDecrement".
+
+
+
 ## Versione 3.0
 In this third version I added:
 - input_text to view the activated mode (AUTO, MANUAL, AWAY)
