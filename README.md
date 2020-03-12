@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/Version-2.0-green)
+![Version](https://img.shields.io/badge/Version-3.5-green)
 [![Platform](https://img.shields.io/badge/Platform-Hassio-yellow)](https://www.home-assistant.io/hassio/installation/)
 [![hassiohelp](https://img.shields.io/badge/Forum-hassiohelp-blue)](https://hassiohelp.eu/2019/12/21/termostato-programmabile/)
 
