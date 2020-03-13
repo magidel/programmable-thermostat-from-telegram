@@ -8,6 +8,14 @@
 
 # Programmable thermostat from Telegram
 
+## Versione 3.6
+
+- #### Added two automations when Hassio restart useful for the memory of the climate system.
+  Under the conditions if the AUTO mode is ON then the AUTO automation is activated.
+  In a dual way, the condition of the second automation concerns the MANUAL mode.
+
+Also corrected the MANUAL automation setting action, using the template of the variable "input_number.setpoint".
+
 ## Versione 3.5
 Mostly bug fixes !!
 I wanted to fix some flaws:
