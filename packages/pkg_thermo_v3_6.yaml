@@ -256,6 +256,10 @@ automation:
         data:
           entity_id: input_boolean.weekend_on
       - delay: '00:00:01'
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.boost_mode
+      - delay: '00:00:01'
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.away_mode
@@ -352,6 +356,10 @@ automation:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.boost_mode
+      - delay: '00:00:01'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.away_mode
       - delay: '00:00:01'
       - service: input_text.set_value
         data:
