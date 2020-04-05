@@ -1,0 +1,398 @@
+##############################
+# 3RD MENU
+##############################
+  - title: Weather/Thermo Conditions
+    panel: true
+    path: weather_condition
+    icon: 'mdi:thermostat'
+    cards:
+
+      - type: vertical-stack
+        cards:
+          ##############################
+          # RIGA 1
+          ##############################
+          - type: horizontal-stack 
+            cards:
+              ##############################
+              # COLONNA 1
+              ##############################
+              - type: entities
+                title: Weather Conditions
+                show_header_toggle: false
+                style:
+                  .: |
+                    #states > * {
+                        margin: -1px 0px !important;
+                    }
+                entities:
+                  - entity: sensor.avgtempall
+                    name: TempAVG all
+                    icon: 'mdi:home-circle'
+                  - type: divider
+                    style:
+                      height: 1px
+                      width: 95%
+                      margin-left: auto
+                      margin-right: auto
+                      background: '#03A9F4'
+                  - entity: sensor.avgtempthermo
+                    name: TempAVG thermo
+                    icon: 'mdi:water-boiler'
+                  - entity: sensor.temperature_158d000xxxxx
+                    name: TempIngresso
+                  - entity: sensor.temperature_158d000xxxxx
+                    name: TempCameretta
+                  - type: divider
+                    style:
+                      height: 1px
+                      width: 95%
+                      margin-left: auto
+                      margin-right: auto
+                      background: '#03A9F4'
+                  - entity: sensor.temperature_158d000xxxxx
+                    name: TempExt
+                  - entity: sensor.humidity_158d000xxxxx
+                    name: HumExt
+                  - entity: sensor.pressure_158d000xxxxx
+                    name: PressExt
+
+              ##############################
+              # COLONNA 2
+              ##############################
+              - type: thermostat
+                entity: climate.generic_thermo
+
+              ##############################
+              # COLONNA 3
+              ##############################
+              - type: entities
+                title: Thermostat Mode
+                show_header_toggle: false
+                style:
+                  .: |
+                    #states > * {
+                        margin: -1px 0px !important;
+                    }
+                state_color: true
+                entities:
+                  - input_boolean.auto_mode
+                  - input_boolean.away_mode
+                  - input_text.modality
+                  - input_number.setpoint
+
+
+          ##############################
+          # RIGA 2
+          ##############################
+          - type: horizontal-stack 
+            cards:
+              ##############################
+              # COLONNA 1
+              ##############################
+              - type: conditional
+                conditions:
+                  - entity: input_boolean.auto_mode
+                    state: "on"
+                card:
+                  type: entities
+                  title: Scheduler for AUTO mode
+                  show_header_toggle: false
+                  entities:
+                    ############################## Lunedì
+                    - type: custom:multiple-entity-row
+                      entity: input_boolean.lun_switch
+                      name: Lunedì
+                      toggle: true
+                      state_color: true
+                      entities:
+                        - entity: input_text.lun_1_on
+                          name: 'LUN_1_ON'
+                        - entity: input_text.lun_1_off
+                          name: 'LUN_1_OFF'
+                        - entity: input_text.lun_2_on
+                          name: 'LUN_2_ON'
+                        - entity: input_text.lun_2_off
+                          name: 'LUN_2_OFF'
+                        - entity: input_text.lun_3_on
+                          name: 'LUN_3_ON'
+                        - entity: input_text.lun_3_off
+                          name: 'LUN_3_OFF'
+                        - entity: input_text.lun_4_on
+                          name: 'LUN_4_ON'
+                        - entity: input_text.lun_4_off
+                          name: 'LUN_4_OFF'
+                    ############################## Martedì
+                    - type: custom:multiple-entity-row
+                      entity: input_boolean.mar_switch
+                      name: Martedì
+                      toggle: true
+                      state_color: true
+                      entities:
+                        - entity: input_text.mar_1_on
+                          name: 'MAR_1_ON'
+                        - entity: input_text.mar_1_off
+                          name: 'MAR_1_OFF'
+                        - entity: input_text.mar_2_on
+                          name: 'MAR_2_ON'
+                        - entity: input_text.mar_2_off
+                          name: 'MAR_2_OFF'
+                        - entity: input_text.mar_3_on
+                          name: 'MAR_3_ON'
+                        - entity: input_text.mar_3_off
+                          name: 'MAR_3_OFF'
+                        - entity: input_text.mar_4_on
+                          name: 'MAR_4_ON'
+                        - entity: input_text.mar_4_off
+                          name: 'MAR_4_OFF'
+                    ############################## Mercoledì
+                    - type: custom:multiple-entity-row
+                      entity: input_boolean.mer_switch
+                      name: Mercoledì
+                      toggle: true
+                      state_color: true
+                      entities:
+                        - entity: input_text.mer_1_on
+                          name: 'MER_1_ON'
+                        - entity: input_text.mer_1_off
+                          name: 'MER_1_OFF'
+                        - entity: input_text.mer_2_on
+                          name: 'MER_2_ON'
+                        - entity: input_text.mer_2_off
+                          name: 'MER_2_OFF'
+                        - entity: input_text.mer_3_on
+                          name: 'MER_3_ON'
+                        - entity: input_text.mer_3_off
+                          name: 'MER_3_OFF'
+                        - entity: input_text.mer_4_on
+                          name: 'MER_4_ON'
+                        - entity: input_text.mer_4_off
+                          name: 'MER_4_OFF'
+                    ############################## Giovedì
+                    - type: custom:multiple-entity-row
+                      entity: input_boolean.gio_switch
+                      name: Giovedì
+                      toggle: true
+                      state_color: true
+                      entities:
+                        - entity: input_text.gio_1_on
+                          name: 'GIO_1_ON'
+                        - entity: input_text.gio_1_off
+                          name: 'GIO_1_OFF'
+                        - entity: input_text.gio_2_on
+                          name: 'GIO_2_ON'
+                        - entity: input_text.gio_2_off
+                          name: 'GIO_2_OFF'
+                        - entity: input_text.gio_3_on
+                          name: 'GIO_3_ON'
+                        - entity: input_text.gio_3_off
+                          name: 'GIO_3_OFF'
+                        - entity: input_text.gio_4_on
+                          name: 'GIO_4_ON'
+                        - entity: input_text.gio_4_off
+                          name: 'GIO_4_OFF'
+                    ############################## Venerdì
+                    - type: custom:multiple-entity-row
+                      entity: input_boolean.ven_switch
+                      name: Venerdì
+                      toggle: true
+                      state_color: true
+                      entities:
+                        - entity: input_text.ven_1_on
+                          name: 'VEN_1_ON'
+                        - entity: input_text.ven_1_off
+                          name: 'VEN_1_OFF'
+                        - entity: input_text.ven_2_on
+                          name: 'VEN_2_ON'
+                        - entity: input_text.ven_2_off
+                          name: 'VEN_2_OFF'
+                        - entity: input_text.ven_3_on
+                          name: 'VEN_3_ON'
+                        - entity: input_text.ven_3_off
+                          name: 'VEN_3_OFF'
+                        - entity: input_text.ven_4_on
+                          name: 'VEN_4_ON'
+                        - entity: input_text.ven_4_off
+                          name: 'VEN_4_OFF'
+                    ############################## Sabato
+                    - type: custom:multiple-entity-row
+                      entity: input_boolean.sab_switch
+                      name: Sabato
+                      toggle: true
+                      state_color: true
+                      entities:
+                        - entity: input_text.sab_1_on
+                          name: 'SAB_1_ON'
+                        - entity: input_text.sab_1_off
+                          name: 'SAB_1_OFF'
+                        - entity: input_text.sab_2_on
+                          name: 'SAB_2_ON'
+                        - entity: input_text.sab_2_off
+                          name: 'SAB_2_OFF'
+                        - entity: input_text.sab_3_on
+                          name: 'SAB_3_ON'
+                        - entity: input_text.sab_3_off
+                          name: 'SAB_3_OFF'
+                        - entity: input_text.sab_4_on
+                          name: 'SAB_4_ON'
+                        - entity: input_text.sab_4_off
+                          name: 'SAB_4_OFF'
+                    ############################## Domenica
+                    - type: custom:multiple-entity-row
+                      entity: input_boolean.dom_switch
+                      name: Domenica
+                      toggle: true
+                      state_color: true
+                      entities:
+                        - entity: input_text.dom_1_on
+                          name: DOM_1_ON'
+                        - entity: input_text.dom_1_off
+                          name: 'DOM_1_OFF'
+                        - entity: input_text.dom_2_on
+                          name: 'DOM_2_ON'
+                        - entity: input_text.dom_2_off
+                          name: 'DOM_2_OFF'
+                        - entity: input_text.dom_3_on
+                          name: 'DOM_3_ON'
+                        - entity: input_text.dom_3_off
+                          name: 'DOM_3_OFF'
+                        - entity: input_text.dom_4_on
+                          name: 'DOM_4_ON'
+                        - entity: input_text.dom_4_off
+                          name: 'DOM_4_OFF'
+
+
+              ##############################
+              # COLONNA 2
+              ##############################
+              - type: conditional
+                conditions:
+                  - entity: input_boolean.auto_mode
+                    state: "on"
+                card:
+                  type: entities
+                  title: AUTO Mode
+                  show_header_toggle: false
+                  style:
+                    .: |
+                      #states > * {
+                          margin: -1px 0px !important;
+                      }
+                  state_color: true
+                  entities:
+                    - input_boolean.weekend_on
+                    - input_boolean.boost_mode
+                    - input_number.temp_high
+                    - input_number.temp_low
+
+          ##############################
+          # RIGA 2
+          ##############################
+          - type: horizontal-stack 
+            cards:
+              ##############################
+              # COLONNA 1
+              ##############################
+              - type: entities
+                title: Thermo Switch Info
+                show_header_toggle: false
+                style:
+                  .: |
+                    #states > * {
+                        margin: -1px 0px !important;
+                    }
+                state_color: true
+                entities:
+                  - entity: sensor.thermo_switch_last_24h
+                    name: 'Thermo Switch Last 24 (history_stats)'
+                  - entity: sensor.template_thermo_switch_last_24h
+                    name: 'Template Switch Last 24h'
+                  - type: divider
+                  - entity: sensor.thermo_switch_today
+                    name: 'Template Switch today (history_stats)'
+                  - entity: sensor.template_thermo_switch_today
+                    name: 'Template Switch Today'
+                  - type: divider
+                  - entity: input_datetime.period_thermo_on
+                    name: '*Last DateTime ON*'
+                  - entity: input_datetime.period_thermo_off
+                    name: '*Last DateTime OFF*' 
+                  - sensor.template_period_thermo
+                  - type: divider
+                    style:
+                      height: 2px
+                      width: 95%
+                      margin-left: auto
+                      margin-right: auto
+                      background: '#03A9F4'
+                  - sensor.template_thermo_switch_uptime
+                  - entity: sensor.shelly_shsw_1_xxxxx_uptime
+                    name: Thermo Switch Uptime
+                  - switch.shelly_shsw_1_xxxxx
+                  - binary_sensor.shelly_shsw_1_xxxxx_switch
+
+
+              ##############################
+              # COLONNA 2
+              ##############################
+              - type: custom:mini-graph-card
+                name: Temps
+                icon: 'mdi:temperature-celsius'
+                group: false
+                hours_to_show: 12
+                points_per_hour: 1
+                group_by: interval
+                animate: false
+                height: 230
+                line_width: 4
+                decimals: 1
+                hour24: true
+                font_size: 100
+                font_size_header: 12
+                align_header: center
+                align_state: center
+                smoothing: true
+                entities:
+                  - entity: sensor.temperature_158d00027b0c40
+                    name: Temp Ingresso
+                    color: '#FFFFFF'
+                    unit: '°C'
+                    show_state: true
+                    show_indicator: true
+                    show_graph: true
+                    show_line: true
+                    show_fill: true
+                    show_points: true
+                    show_legend: true
+                    state_adaptive_color: true
+                  - entity: sensor.avgtempall
+                    name: AVG Temp ALL
+                    color: '#FF2A00'
+                    show_state: true
+                    show_indicator: true
+                    show_graph: true
+                    show_line: true
+                    show_fill: true
+                    show_points: true
+                    show_legend: true
+                    state_adaptive_color: true
+                  - entity: sensor.avgtempthermo
+                    name: AVG Temp Thermo
+                    show_state: true
+                    color: '#ff6600'
+                    show_indicator: true
+                    show_line: true
+                    show_fill: true
+                    show_points: true
+                    show_legend: true
+                    state_adaptive_color: true
+                  - entity: sensor.temperature_158d000273c773
+                    name: Temp Ext
+                    show_state: true
+                    color: '#03A9F4'
+                    show_indicator: true
+                    show_line: true
+                    show_fill: true
+                    show_points: true
+                    show_legend: true
+                    state_adaptive_color: true
