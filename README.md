@@ -45,6 +45,10 @@ The rest of the script does not vary in substance from the previous version.
   
 The limit as always depends on all of us!
 
+Final result:
+![Lovelace](https://i.imgur.com/Zbt2Zgc.jpg)
+
+
 ## Versione 3.6
 
 - #### Added two automations when Hassio restart useful for the memory of the climate system.
