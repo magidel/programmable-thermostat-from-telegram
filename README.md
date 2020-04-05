@@ -21,6 +21,7 @@
   In fact, there was no "visual" programming, a scheduler that can be edited directly from the UI, without putting your hand to the .py file.
   It was therefore decided to put on a scheduler for the weekly programming of the boiler.
   The daily programming has been set in 4 states (ON and OFF for each state), therefore in total 8 states, for each day of the week.
+  So you can turn it on and off 4 times a day.
   It was decided to use input_text instead of input_datetime to be able to insert any wording (any text, for example "null") that "cancels" the time in that state.
   Not only is there a pattern to follow in the input_text declaration, but in the .py file there is a control over the text coming from the UI.
   In addition, an input_boolean called switch has been added for each day, which defines the activation or deactivation in the day's programming.
