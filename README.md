@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/Version-3.6-green)
+![Version](https://img.shields.io/badge/Version-4.0-green)
 [![Platform](https://img.shields.io/badge/Platform-Hassio-yellow)](https://www.home-assistant.io/hassio/installation/)
 [![hassiohelp](https://img.shields.io/badge/Forum-hassiohelp-blue)](https://hassiohelp.eu/2019/12/21/termostato-programmabile/)
 
@@ -7,6 +7,40 @@
 ![notNeed](https://img.shields.io/badge/notNeed-deviceTracker-lightgrey)
 
 # Programmable thermostat from Telegram
+
+## Versione 4.0
+
+- #### Necessary requirement:
+  card: Multiple Entity Row (https://github.com/benct/lovelace-multiple-entity-row)
+
+- #### Added the GUI for weekly programming
+  Given the forced stay in the home, the UI is increasingly used compared to simple telegram messages / buttons.
+  This has led to even more attention to the appearance of the thermostat package.
+  In fact, there was no "visual" programming, a scheduler that can be edited directly from the UI, without putting your hand to the .py file.
+  It was therefore decided to put on a scheduler for the weekly programming of the boiler.
+  The daily programming has been set in 4 states (ON and OFF for each state), therefore in total 8 states, for each day of the week.
+  It was decided to use input_text instead of input_datetime to be able to insert any wording (any text, for example "null") that "cancels" the time in that state.
+  Not only is there a pattern to follow in the input_text declaration, but in the .py file there is a control over the text coming from the UI.
+  In addition, an input_boolean called switch has been added for each day, which defines the activation or deactivation in the day's programming.
+  The input_boolean variable to confirm the presence or absence during the weekend at home has now been "hooked" to the switches described above on Saturday and Sunday.
+  
+A note to the .py file.
+Unfortunately the function "datetime.strptime ()" present and very useful in python, in the python instance launched in Hassio it is not present, it is not even possible to import it.
+So rewrote this function to traform input_text into real time variables.
+The schedule () function, on the other hand, creates the "current_schedule" based on information from the UI.
+The rest of the script does not vary in substance from the previous version. 
+
+- #### Conclusion and future developments 
+  The scheduler defined before in the .py file, now, instead, derives directly from the UI.
+  
+  But why stop at the boiler program?
+  If you notice the python script better, the "climate.set_temperature" service is called. Indeed:
+  ```python
+  hass.services.call ('climate', 'set_temperature', ...
+  ```
+  So you could think of using another service, for example "remote.turn_on", so as to use the Broadlink to program the ignition of anything (air conditioner, robot ...).
+  
+The limit as always depends on all of us!
 
 ## Versione 3.6
 
