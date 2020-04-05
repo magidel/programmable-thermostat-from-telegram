@@ -10,6 +10,8 @@
 
 ## Versione 4.0
 
+![Lovelace](https://i.imgur.com/2UvhqgI.jpg)
+
 - #### Necessary requirement:
   card: Multiple Entity Row (https://github.com/benct/lovelace-multiple-entity-row)
 
