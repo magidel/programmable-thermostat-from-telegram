@@ -128,18 +128,6 @@ for high_time in current_schedule:
         in_high_time = True
         break
 
-logger.info("now: %s", now)
-logger.info("in_high_time: %s", in_high_time)
-if in_high_time:
-    message = "TEMP_HIGH"
-    hass.services.call('notify', 'telegram', {'title' : '*Test*', 'message': message})
-else:
-    message = "TEMP_LOW"
-    hass.services.call('notify', 'telegram', {'title' : '*Test*', 'message': message})
-
-logger.info("message: %s", message)
-
-
 new_temp = TEMP_HIGH if in_high_time else TEMP_LOW 
 
 # message = "Set Temperature at: {} (old temp: {}) from scheduler".format(new_temp.state, current_temp)
