@@ -151,6 +151,14 @@ The _uptime sensor_ and the two _binary_sensor_ used to know the cloud or MQTT m
 ## Version 1.0
 The idea starts here (https://ledstripsandcode.blogspot.com/2018/11/simple-thermostat-scheduler-in-home.html), and then develops according to my needs.
 
+First of all, this is the only hardware component used, the best for this purpose:
+
+[Shelly 1](https://shelly.cloud/shelly1-open-source/)
+
+therefore for use with the boiler, the clean contact was used that the shelly offers us:
+
+![shelly](https://i.imgur.com/csJOK2E.jpg)
+
 I needed an hourly and daily / weekly program to manage the home heating, in addition to the simpler function of the thermostat (the boiler switches on below a certain temperature threshold).
 In the specific of the program from Monday to Friday rather fixed times, fixed and the weekend, instead, two alternatives:
 
