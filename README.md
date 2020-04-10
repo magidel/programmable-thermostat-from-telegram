@@ -155,7 +155,7 @@ First of all, this is the only hardware component used, the best for this purpos
 
 [Shelly 1](https://shelly.cloud/shelly1-open-source/)
 
-therefore for use with the boiler, the clean contact was used that the shelly offers us:
+therefore for use with the boiler, the clean contact (potential free relay contact) was used that the shelly offers us:
 
 ![shelly](https://i.imgur.com/csJOK2E.jpg)
 
