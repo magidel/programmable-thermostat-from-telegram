@@ -163,6 +163,10 @@ Wire connections description scheme from shelly to boiler:
 
 The phsycal button is used to start the boiler manually, without going through any program hassio!
 
+This is the app configuration:
+
+![app](https://i.imgur.com/iA5n0RD.jpg)
+
 I needed an hourly and daily / weekly program to manage the home heating, in addition to the simpler function of the thermostat (the boiler switches on below a certain temperature threshold).
 In the specific of the program from Monday to Friday rather fixed times, fixed and the weekend, instead, two alternatives:
 
