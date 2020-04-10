@@ -8,7 +8,7 @@
 
 # Programmable thermostat from Telegram
 
-## Versione 4.0
+## Version 4.0
 
 ![Lovelace](https://i.imgur.com/2UvhqgI.jpg)
 
@@ -49,7 +49,7 @@ Final result:
 ![Lovelace](https://i.imgur.com/Zbt2Zgc.jpg)
 
 
-## Versione 3.6
+## Version 3.6
 
 - #### Added two automations when Hassio restart useful for the memory of the climate system.
   Under the conditions if the AUTO mode is ON then the AUTO automation is activated.
@@ -57,7 +57,7 @@ Final result:
 
 Also corrected the MANUAL automation setting action, using the template of the variable "input_number.setpoint".
 
-## Versione 3.5
+## Version 3.5
 Mostly bug fixes !!
 I wanted to fix some flaws:
 
@@ -101,7 +101,7 @@ I wanted to fix some flaws:
 
 
 
-## Versione 3.0
+## Version 3.0
 In this third version I added:
 - input_text to view the activated mode (AUTO, MANUAL, AWAY)
 - Boost mode, increase HighTarget in AUTO mode by +0.5°C from 19.00 to 08.00 everyday (temperature increase for my wife ;) )
@@ -122,7 +122,7 @@ The modality can be changed through Telegram or the Lovelace UI.
 
 #### I remind you to change the entities of your devices in the code (climate, temperature sensors, switches ...)
 
-## Versione 2.0
+## Version 2.0
 In this second version I added two operating modes:
 
 ![Lovelace](https://i.imgur.com/FcgOm4I.jpg)
