@@ -159,7 +159,7 @@ therefore for use with the boiler, the clean contact (potential free relay conta
 ![shelly](https://i.imgur.com/csJOK2E.jpg)
 
 Wire connections description scheme from shelly to boiler:
-![sheme](https://i.imgur.com/H6zuVi4.png)
+![sheme](https://i.imgur.com/FFQCscr.png)
 
 The phsycal button is used to start the boiler manually, without going through any program hassio!
 
