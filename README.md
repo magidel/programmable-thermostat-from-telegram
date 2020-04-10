@@ -156,8 +156,12 @@ First of all, this is the only hardware component used, the best for this purpos
 [Shelly 1](https://shelly.cloud/shelly1-open-source/)
 
 therefore for use with the boiler, the clean contact (potential free relay contact) was used that the shelly offers us:
-
 ![shelly](https://i.imgur.com/csJOK2E.jpg)
+
+Wire connections description scheme from shelly to boiler:
+![sheme](https://i.imgur.com/H6zuVi4.png)
+
+The phsycal button is used to start the boiler manually, without going through any program hassio!
 
 I needed an hourly and daily / weekly program to manage the home heating, in addition to the simpler function of the thermostat (the boiler switches on below a certain temperature threshold).
 In the specific of the program from Monday to Friday rather fixed times, fixed and the weekend, instead, two alternatives:
