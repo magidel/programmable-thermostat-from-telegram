@@ -18,7 +18,7 @@ Italian Support: HassioHelp
    
    Facebook https://www.facebook.com/groups/2062381507393179
    
-   WebSite https://hassiohelp.eu/
+   WebSite https://hassiohelp.eu/2019/12/21/termostato-programmabile/
    
 
 - #### Necessary requirement:
