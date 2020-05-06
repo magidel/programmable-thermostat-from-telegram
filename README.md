@@ -12,8 +12,7 @@
 
 ![Lovelace](https://i.imgur.com/2UvhqgI.jpg)
 
-Italian Support:
- HassioHelp:
+Italian Support: #### HassioHelp
  
    Telegram https://t.me/HassioHelp
    
