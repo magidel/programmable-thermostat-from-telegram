@@ -14,9 +14,13 @@
 
 Italian Support:
  HassioHelp:
+ 
    Telegram https://t.me/HassioHelp
+   
    Facebook https://www.facebook.com/groups/2062381507393179
+   
    WebSite https://hassiohelp.eu/
+   
 
 - #### Necessary requirement:
   card: Multiple Entity Row (https://github.com/benct/lovelace-multiple-entity-row)
