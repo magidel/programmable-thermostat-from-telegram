@@ -30,19 +30,25 @@ Italian Support: HassioHelp
   In using this way of operating, in other areas, most likely, the average temperature will go above or below the "target_sensor" of the "climate" entity (for example, since the rooms are colder in the living area, this the latter will be heated more, above the set reference temperature). The temperature differences between the zones set, however, are around the single degree, so this zone approximation is welcome.
 
 Going into detail, we wanted to leave all the functions introduced in previous versions, including AUTO and MANUAL mode.
+
 If you prefer one or the other, you have the opportunity to set the reference zone.
+
 In the case of MANUAL mode, the only parameters are the thermal zone and the reference temperature. The picture below as an example:
 
 ![Manual](https://i.imgur.com/kKUBi0Y.jpg)
 
 In the case of AUTO mode, the choice of the zone is linked to the time slot of interest.
+
 The package has been designed to manage up to 4 time intervals, in which the start-up and shutdown times of the boiler are set.
+
 The setting of the thermal zone has also been added to these times, so as to concentrate the heat in the area and time slot concerned.
 
 ![Auto](https://i.imgur.com/pgM69Ga.jpg)
 
 By introducing the concept of zones, the choice of the thermal zone was added in the previous YAML interface, following the time band.
+
 For a better view, a "picture-elements" card has been introduced which represents the entire week with the various time bands and the related thermal zones.
+
 With an input_boolean ("Calendar mode", see the picture below) you can choose between the two lovelace cards.
 
 ![Calendar](https://i.imgur.com/pjF0DvC.jpg)
@@ -50,6 +56,10 @@ With an input_boolean ("Calendar mode", see the picture below) you can choose be
 
 Finally, for completeness, the avgtemp sensors (average temperatures of the zones) and the thermohygrometric index were inserted directly into the package.
 
+For the colors of the thermohygrometric index I added a theme to insert in the themes folder.
+  ```yaml
+  themes: !include_dir_merge_named themes/
+  ```
 
 #### Images from telegram
 | main screen | AUTO mode | MANUAL mode |
