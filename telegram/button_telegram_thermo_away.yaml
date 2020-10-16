@@ -1,0 +1,45 @@
+###########################################################################################################
+### THERMO AWAY Mode
+###########################################################################################################
+  - alias: Button Thermo AWAY
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /away
+    action:
+      - service: climate.turn_on
+        entity_id: climate.generic_thermo
+      - delay: '00:00:01'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_on
+        entity_id: automation.thermo_manual_mode
+      - delay: '00:00:01'
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.setpoint
+          value: 17
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F91A" }} *Thermo AWAY MODE*
+            input_boolean.auto_mode = OFF
+            
+            state *Auto Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_76a12b') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            state *Away mode*: {{ states('input_boolean.away_mode') }}
+            -----------------------------------------------------------------
+            *SetPoint*: {{ states('input_number.setpoint') }} °C
+            Datetime: {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
