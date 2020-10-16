@@ -31,6 +31,7 @@ Italian Support: HassioHelp
 
 Going into detail, we wanted to leave all the functions introduced in previous versions, including AUTO and MANUAL mode.
 If you prefer one or the other, you have the opportunity to set the reference zone.
+![Manual](https://i.imgur.com/kKUBi0Y.jpg)
 In the case of MANUAL mode, the only parameters are the thermal zone and the reference temperature.
 In the case of AUTO mode, the choice of the zone is linked to the time slot of interest. The package has been designed to manage up to 4 time intervals, in which the start-up and shutdown times of the boiler are set. The setting of the thermal zone has also been added to these times, so as to concentrate the heat in the area and time slot concerned.
 
