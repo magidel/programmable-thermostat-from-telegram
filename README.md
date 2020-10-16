@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/Version-4.0-green)
+![Version](https://img.shields.io/badge/Version-5.0-green)
 [![Platform](https://img.shields.io/badge/Platform-Hassio-yellow)](https://www.home-assistant.io/hassio/installation/)
 [![hassiohelp](https://img.shields.io/badge/Forum-hassiohelp-blue)](https://hassiohelp.eu/2019/12/21/termostato-programmabile/)
 
@@ -8,9 +8,9 @@
 
 # Programmable thermostat from Telegram
 
-## Version 4.0
+## Version 5.0
 
-![Lovelace](https://i.imgur.com/2UvhqgI.jpg)
+![Lovelace](https://i.imgur.com/9Xx6L0V.jpg)
 
 Italian Support: HassioHelp
  
@@ -19,7 +19,30 @@ Italian Support: HassioHelp
    Facebook https://www.facebook.com/groups/2062381507393179
    
    WebSite https://hassiohelp.eu/2019/12/21/termostato-programmabile/
-   
+
+- #### Added Zone programming and new GUI for weekly program
+  The development of the package has always been linked to family needs which can vary.
+  Specifically, the change of house involves different climatic characteristics than the previous one.
+  The "target_sensor" of the "climate" entity had to be managed no longer as before, single and fixed (the average between two well-defined temperatures), but by zone (for example day and night) precisely due to the characteristics of the new apartment.
+  Not having thermostatic heads available to the radiators (see also the cost for each valve), it was decided to use only the temperature sensors to create thermal zones.
+  This new packege introduces the choice of the area, among the many defined a priori.
+  Each zone is associated with an average temperature (for example the BedRooms zone will have the average temperature of the two bedrooms as "target_sensor"). By choosing that zone, the boiler will work only for that zone, that is, it will heat up until the current temperature (the "target_sensor, or the temperature of the selected zone) does not equal the reference temperature (for example set at 20 ° C).
+  In using this way of operating, in other areas, most likely, the average temperature will go above or below the "target_sensor" of the "climate" entity (for example, since the rooms are colder in the living area, this the latter will be heated more, above the set reference temperature). The temperature differences between the zones set, however, are around the single degree, so this zone approximation is welcome.
+
+Going into detail, we wanted to leave all the functions introduced in previous versions, including AUTO and MANUAL mode.
+If you prefer one or the other, you have the opportunity to set the reference zone.
+In the case of MANUAL mode, the only parameters are the thermal zone and the reference temperature.
+In the case of AUTO mode, the choice of the zone is linked to the time slot of interest. The package has been designed to manage up to 4 time intervals, in which the start-up and shutdown times of the boiler are set. The setting of the thermal zone has also been added to these times, so as to concentrate the heat in the area and time slot concerned.
+
+By introducing the concept of zones, the choice of the thermal zone was added in the previous YAML interface, following the time band.
+For a better view, a "picture-elements" card has been introduced which represents the entire week with the various time bands and the related thermal zones.
+With an input_boolean you can choose between the two lovelace cards.
+
+Finally, for completeness, the avgtemp sensors (average temperatures of the zones) and the thermohygrometric index were inserted directly into the package.
+
+## Version 4.0
+
+![Lovelace](https://i.imgur.com/2UvhqgI.jpg)
 
 - #### Necessary requirement:
   card: Multiple Entity Row (https://github.com/benct/lovelace-multiple-entity-row)
