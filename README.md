@@ -50,6 +50,13 @@ With an input_boolean ("Calendar mode", see the picture below) you can choose be
 
 Finally, for completeness, the avgtemp sensors (average temperatures of the zones) and the thermohygrometric index were inserted directly into the package.
 
+
+#### Images from telegram
+| main screen | AUTO mode | MANUAL mode |
+|    --    |    --    |    --    |
+|  ![main](https://i.imgur.com/lp1sxyR.jpg)  |  ![auto](https://i.imgur.com/bjHGgMo.jpg)  ||  ![manual](https://i.imgur.com/DMupSUc.jpg)  |
+
+
 ## Version 4.0
 
 ![Lovelace](https://i.imgur.com/2UvhqgI.jpg)
