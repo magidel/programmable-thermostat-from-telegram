@@ -19,6 +19,8 @@ Italian Support: HassioHelp
    Facebook https://www.facebook.com/groups/2062381507393179
    
    WebSite https://hassiohelp.eu/2019/12/21/termostato-programmabile/
+   
+   Forum https://forum.hassiohelp.eu/d/515-termostato-programmabile-da-telegram
 
 - #### Added Zone programming and new GUI for weekly program
   The development of the package has always been linked to family needs which can vary.
