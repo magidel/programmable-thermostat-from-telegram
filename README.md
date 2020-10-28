@@ -13,12 +13,7 @@
 ![Lovelace](https://i.imgur.com/IMMpP78.jpg)
 
 
-![Watch the video](https://www.youtube.com/watch?v=lfGzzRBbqxs)
-
-
-## Version 5.0
-
-![Lovelace](https://i.imgur.com/9Xx6L0V.jpg)
+   video: https://www.youtube.com/watch?v=lfGzzRBbqxs
 
 Italian Support: HassioHelp
  
@@ -29,6 +24,10 @@ Italian Support: HassioHelp
    WebSite https://hassiohelp.eu/2019/12/21/termostato-programmabile/
    
    Forum https://forum.hassiohelp.eu/d/515-termostato-programmabile-da-telegram
+
+## Version 5.0
+
+![Lovelace](https://i.imgur.com/9Xx6L0V.jpg)
 
 - #### Added Zone programming and new GUI for weekly program
   The development of the package has always been linked to family needs which can vary.
