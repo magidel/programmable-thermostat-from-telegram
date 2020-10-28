@@ -10,7 +10,10 @@
 
 ## Version 6.0
 
-[![Watch the video](https://img.youtube.com/vi/lfGzzRBbqxs/0.jpg)](https://www.youtube.com/watch?v=lfGzzRBbqxs)
+![Lovelace](https://i.imgur.com/IMMpP78.jpg)
+
+
+[![Watch the video]](https://www.youtube.com/watch?v=lfGzzRBbqxs)
 
 
 ## Version 5.0
