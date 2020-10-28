@@ -12,7 +12,7 @@
 
 ![Lovelace](https://i.imgur.com/IMMpP78.jpg)
 
-   video: https://www.youtube.com/watch?v=lfGzzRBbqxs
+                  video: https://www.youtube.com/watch?v=lfGzzRBbqxs
 
 Italian Support: HassioHelp
  
@@ -23,6 +23,8 @@ Italian Support: HassioHelp
    WebSite https://hassiohelp.eu/2019/12/21/termostato-programmabile/
    
    Forum https://forum.hassiohelp.eu/d/515-termostato-programmabile-da-telegram
+
+
 
 After creating the zones, why not consider the reference temperatures for each zone?
 From here we started for the umpteenth update of the package.
