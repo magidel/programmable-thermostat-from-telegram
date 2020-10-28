@@ -13,7 +13,7 @@
 ![Lovelace](https://i.imgur.com/IMMpP78.jpg)
 
 
-[![Watch the video]](https://www.youtube.com/watch?v=lfGzzRBbqxs)
+![Watch the video](https://www.youtube.com/watch?v=lfGzzRBbqxs)
 
 
 ## Version 5.0
