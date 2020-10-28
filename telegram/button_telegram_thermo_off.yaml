@@ -1,0 +1,27 @@
+###########################################################################################################
+### THERMO OFF Mode
+###########################################################################################################
+  - alias: Button Thermo OFF
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /offclimate
+    action:
+      - service: climate.turn_off
+        entity_id: climate.generic_thermo
+      - delay: '00:00:01'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F91A" }} *Thermo Climate OFF*
+            
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_xxxxxx') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            
+            Choose your command
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'

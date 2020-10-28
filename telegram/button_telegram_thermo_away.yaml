@@ -1,0 +1,25 @@
+###########################################################################################################
+### THERMO AWAY Mode
+###########################################################################################################
+  - alias: Button Thermo AWAY
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /away
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.away_mode
+      - delay: '00:00:01'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F91A" }} *Thermo AWAY MODE*
+            
+            Choose your command
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'

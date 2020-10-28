@@ -1,0 +1,260 @@
+###########################################################################################################
+### THERMO MANUAL Mode
+###########################################################################################################
+  - alias: Button Thermo MANUAL
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermomanual
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.auto_mode
+      - delay: '00:00:01'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F91A" }} *Thermo MANUAL ON*
+            
+            Choose your command
+          data:
+            inline_keyboard:
+              - '{{ "\u2705\ufe0f" }} ThermoON:/thermoon, {{ "\u274c\ufe0f" }} ThermoOff:/thermooff'
+              - '{{ "\U0001F7E5" }} SetPoint +0.5:/increment, {{ "\U0001F7E6" }} SetPoint -0.5:/decrement'
+              - '{{ "\U0001F6CF" }} Beds Zone:/bed, {{ "\U0001F6CB" }} Living Zone:/living, {{ "\U0001F3E0" }} All Zone:/all'
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+
+####################################################################### 
+  - alias: Button Thermo ON
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermoon
+    action:
+      - service: switch.turn_on
+        entity_id: switch.shelly_shsw_1_xxxxxx
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\U0001F525" }} *Thermo switch ON*
+            
+            state Thermo Switch: {{ states('switch.shelly_shsw_1_xxxxxx') }} at {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+  - alias: Button Thermo OFF
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermooff
+    action:
+      - service: switch.turn_off
+        entity_id: switch.shelly_shsw_1_xxxxxx
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo OFF*'
+          message: |-
+            
+            {{ "\u2744\ufe0f" }} *Thermo Switch OFF* 
+            
+            state Thermo: {{ states('switch.shelly_shsw_1_xxxxxx') }} at {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+####################################################################### 
+  - alias: Button SetPoint increment
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /increment
+    action:
+      - service: input_number.increment
+        data:
+          entity_id: input_number.setpoint
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\U0001F7E5" }} {{ "\U0001F4C8" }} *+SetPoint*
+            
+            state *SetPoint*: {{ states('input_number.setpoint') }} °C
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+  - alias: Button SetPoint decrement
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /decrement
+    action:
+      - service: input_number.decrement
+        data:
+          entity_id: input_number.setpoint
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\U0001F7E6" }} {{ "\U0001F4C9" }} *-SetPoint*
+            
+            state *SetPoint*: {{ states('input_number.setpoint') }} °C
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+####################################################################### 
+  - alias: Beds Zone
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /bed
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.thermo_zone
+          option: Beds
+      - delay: '00:00:01'
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_zone
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_temp
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\U0001F6CF" }} *Thermo Zone*
+            
+            Zone selected: {{ states('input_select.thermo_zone') }}
+            Current Temp: {{ states('sensor.current_temp') }} °C
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+  - alias: Living Zone
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /living
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.thermo_zone
+          option: Living
+      - delay: '00:00:01'
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_zone
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_temp
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\U0001F6CB" }} *Thermo Zone*
+            
+            Zone selected: {{ states('input_select.thermo_zone') }}
+            Current Temp: {{ states('sensor.current_temp') }} °C
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+  - alias: All Zone
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /all
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.thermo_zone
+          option: All
+      - delay: '00:00:01'
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_zone
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_temp
+      - service: notify.telegram
+        data_template:
+          # title: '*Thermo ON*'
+          message: |-
+            
+            {{ "\U0001F3E0" }} *Thermo Zone*
+            
+            Zone selected: {{ states('input_select.thermo_zone') }}
+            Current Temp: {{ states('sensor.current_temp') }} °C
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+
+# ####################################################################### 
+#   - alias: Button Climate ON
+#     initial_state: true
+#     trigger:
+#       - platform: event
+#         event_type: telegram_callback
+#         event_data:
+#           data: /climateon
+#     action:
+#       - service: climate.turn_on
+#         entity_id: climate.generic_thermo
+#       - delay: '00:00:03'
+#       - service: notify.telegram
+#         data_template:
+#           # title: '*Thermo OFF*'
+#           message: |-
+            
+#             {{ "\u2744\ufe0f" }} *Climate Manual ON* 
+            
+#             state Thermo: {{ states('climate.generic_thermo') }} at {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+#           data:
+#             inline_keyboard:
+#               - '{{ "\u2b06\ufe0f" }} UpLevel:/thermomanual, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+# ####################################################################### 
+#   - alias: Button Climate OFF
+#     initial_state: true
+#     trigger:
+#       - platform: event
+#         event_type: telegram_callback
+#         event_data:
+#           data: /climateoff
+#     action:
+#       - service: climate.turn_off
+#         entity_id: climate.generic_thermo
+#       - delay: '00:00:03'
+#       - service: notify.telegram
+#         data_template:
+#           # title: '*Thermo OFF*'
+#           message: |-
+            
+#             {{ "\u2744\ufe0f" }} *Climate Manual OFF* 

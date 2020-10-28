@@ -1,0 +1,57 @@
+###########################################################################################################
+### THERMO General
+###########################################################################################################
+# automation:
+  - alias: Button Bot Thermo
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermo
+    action:
+      - service: notify.telegram
+        data_template:
+          # title: 
+          message: |-
+            
+            {{ "\U0001F341" }} *Thermo Management*
+            
+            *Modality*: {{ states('input_text.modality') }}
+            
+            ----------------------------------------------------------
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_xxxxxx') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            
+            ----------------------------------------------------------
+            state *Auto Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Weekend At Home*: {{ states('input_boolean.weekend_on') }}
+            state *Away mode*: {{ states('input_boolean.away_mode') }}
+            
+            ----------------------------------------------------------
+            *Last Period Thermo Switch ON*: {{ states('sensor.template_period_thermo') }}
+            *Yestarday (Last 24h)*: {{ states('sensor.template_thermo_switch_last_24h') }}
+            *Today (00:00 - now)*: {{ states('sensor.template_thermo_switch_today') }}
+            
+            ----------------------------------------------------------
+            *TempExt*: {{ states('sensor.temperature_158d000xxxxxxx') }} °C
+            *TempTH16*: {{ states('sensor.th16_temperature') }} °C
+            *Temp AVG Beds*: {{ states('sensor.avgtempbed') }} °C
+            *Temp AVG Living*: {{ states('sensor.avgtempliving') }} °C
+            *Temp AVG All*: {{ states('sensor.avgtempall') }} °C
+            
+            *Current Zone*: {{ states('sensor.current_zone') }}
+            *Current Temp*: {{ states('sensor.current_temp') }} °C
+            
+            ----------------------------------------------------------
+            *SetPoint* (MANUAL): {{ states('input_number.setpoint') }} °C
+            *Current SetPoint* (AUTO): {{ states('sensor.current_setpoint') }} °C
+            *Low SetPoint* (AUTO): {{ states('input_number.low_setpoint') }} °C
+            
+            Choose your command
+          data:
+            inline_keyboard:
+            - '{{ "\U0001F4DF" }} ThermoAUTO:/thermoauto, {{ "\U0001F91A" }} ThermoMANUAL:/thermomanual'
+            - '{{ "\U0001F170" }} AwayMode:/away, {{ "\U0001F6D1" }} TurnOFFClimate:/offclimate'
+            - '{{ "\u21a9\ufe0f" }} Home:/home'
+

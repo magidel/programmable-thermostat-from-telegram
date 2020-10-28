@@ -1,0 +1,137 @@
+###########################################################################################################
+### THERMO AUTO Mode
+###########################################################################################################
+  - alias: Button Thermo AUTO
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /thermoauto
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.auto_mode
+      - delay: '00:00:01'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F4DF" }} *Thermo AUTO ON*
+            
+            Choose your command
+          data:
+            inline_keyboard:
+              - '{{ "\U0001F3E1" }} Weekend AT Home:/weekendon, {{ "\U0001F3D4" }} Weekend NOT AT Home:/weekendoff'
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+####################################################################### 
+  - alias: Button Thermo WeekendON
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /weekendon
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.weekend_on
+      - delay: '00:00:03'
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.sab_switch_thermo
+      - delay: '00:00:03'
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.dom_switch_thermo
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F3E1" }} *Weekend AT Home*
+            
+            state *Weekend at Home*: {{ states('input_boolean.weekend_on') }}
+            state *sab_switch*: {{ states('input_boolean.sab_switch_thermo') }}
+            state *dom_switch*: {{ states('input_boolean.dom_switch_thermo') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermoauto, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+  - alias: Button Thermo WeekendOFF
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          data: /weekendoff
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.weekend_on
+      - delay: '00:00:03'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.sab_switch_thermo
+      - delay: '00:00:03'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.dom_switch_thermo
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          message: |-
+            
+            {{ "\U0001F3E1" }} *Weekend NOT AT Home*
+            
+            state *Weekend at Home*: {{ states('input_boolean.weekend_on') }}
+            state *sab_switch*: {{ states('input_boolean.sab_switch_thermo') }}
+            state *dom_switch*: {{ states('input_boolean.dom_switch_thermo') }}
+          data:
+            inline_keyboard:
+              - '{{ "\u2b06\ufe0f" }} UpLevel:/thermoauto, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+# ####################################################################### 
+#   - alias: Button tempHigh increment
+#     initial_state: true
+#     trigger:
+#       - platform: event
+#         event_type: telegram_callback
+#         event_data:
+#           data: /temphighplus
+#     action:
+#       - service: input_number.increment
+#         data:
+#           entity_id: input_number.temp_high
+#       - delay: '00:00:03'
+#       - service: notify.telegram
+#         data_template:
+#           message: |-
+            
+#             {{ "\u2795\ufe0f" }} {{ "\U0001F4C8" }} *+tempHigh*
+            
+#             tempHigh: {{ states('input_number.temp_high') }} °C
+#           data:
+#             inline_keyboard:
+#               - '{{ "\u2b06\ufe0f" }} UpLevel:/thermoauto, {{ "\U0001F341" }} 2UpLevel:/thermo, {{ "\u21a9\ufe0f" }} Home:/home'
+
+
+
+#   - alias: Button tempHigh decrement
+#     initial_state: true
+#     trigger:
+#       - platform: event
+#         event_type: telegram_callback
+#         event_data:
+#           data: /temphighminus
+#     action:
+#       - service: input_number.decrement
+#         data:
+#           entity_id: input_number.temp_high
+#       - delay: '00:00:03'
+#       - service: notify.telegram
+#         data_template:
+#           message: |-
+            
+#             {{ "\u2796\ufe0f" }} {{ "\U0001F4C9" }} *-tempHigh*
