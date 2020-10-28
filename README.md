@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/Version-5.0-green)
+![Version](https://img.shields.io/badge/Version-6.0-green)
 [![Platform](https://img.shields.io/badge/Platform-Hassio-yellow)](https://www.home-assistant.io/hassio/installation/)
 [![hassiohelp](https://img.shields.io/badge/Forum-hassiohelp-blue)](https://hassiohelp.eu/2019/12/21/termostato-programmabile/)
 
@@ -7,6 +7,11 @@
 ![notNeed](https://img.shields.io/badge/notNeed-deviceTracker-lightgrey)
 
 # Programmable thermostat from Telegram
+
+## Version 6.0
+
+[![Watch the video](https://img.youtube.com/vi/lfGzzRBbqxs/0.jpg)](https://www.youtube.com/watch?v=lfGzzRBbqxs)
+
 
 ## Version 5.0
 
