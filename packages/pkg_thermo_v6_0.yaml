@@ -1,0 +1,1193 @@
+###########################################################################################################
+### Packages Thermo
+###########################################################################################################
+
+###########################################################################################################
+### Customize
+###########################################################################################################
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        Package: ---Thermo---
+        Creato da: MaGiDeL
+        Creato per: HassioHelp
+
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+    # automation.blackout_fridge:
+    #   <<: *customize
+    #   friendly_name: "Blackout Timer Fridge"
+    #   icon: mdi:stove
+
+###########################################################################################################
+## INPUT
+###########################################################################################################
+input_number:
+  high_setpoint:
+    name: Current SetPoint
+    min: 15
+    max: 22
+    step: 0.5
+  low_setpoint:
+    name: Low SetPoint
+    min: 15
+    max: 22
+    step: 0.5
+  setpoint:
+    name: Manual SetPoint
+    min: 15
+    max: 22
+    step: 0.5
+
+input_boolean:
+  weekend_on:
+    name: Weekend At Home
+    icon: mdi:calendar-week
+  auto_mode:
+    name: Auto Mode
+    icon: mdi:brightness-auto
+  away_mode:
+    name: Away mode
+    icon: mdi:alpha-a-box
+  lun_switch_thermo:
+    name: Lunedì
+    icon: mdi:alpha-l-box
+  mar_switch_thermo:
+    name: Martedì
+    icon: mdi:alpha-m-box
+  mer_switch_thermo:
+    name: Mercoledì
+    icon: mdi:alpha-m-box
+  gio_switch_thermo:
+    name: Giovedì
+    icon: mdi:alpha-g-box
+  ven_switch_thermo:
+    name: Venerdì
+    icon: mdi:alpha-v-box
+  sab_switch_thermo:
+    name: Sabato
+    icon: mdi:alpha-s-box
+  dom_switch_thermo:
+    name: Domenica
+    icon: mdi:alpha-d-box
+
+input_text:
+  modality:
+    name: Modality
+  ####################### LUNEDI
+  lun_1_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_1_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_1_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  lun_2_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_2_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_2_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  lun_3_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_3_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_3_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  lun_4_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_4_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_4_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  lun_5_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_5_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  lun_5_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ####################### MARTEDI
+  mar_1_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_1_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_1_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  mar_2_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_2_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_2_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  mar_3_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_3_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_3_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  mar_4_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_4_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_4_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  mar_5_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_5_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mar_5_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ####################### MERCOLEDI
+  mer_1_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_1_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_1_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  mer_2_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_2_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_2_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  mer_3_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_3_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_3_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  mer_4_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_4_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_4_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  mer_5_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_5_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  mer_5_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ####################### GIOVEDI
+  gio_1_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_1_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_1_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  gio_2_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_2_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_2_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  gio_3_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_3_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_3_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  gio_4_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_4_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_4_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  gio_5_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_5_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  gio_5_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ####################### VENERDI
+  ven_1_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_1_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_1_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ven_2_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_2_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_2_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ven_3_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_3_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_3_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ven_4_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_4_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_4_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ven_5_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_5_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  ven_5_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ####################### SABATO
+  sab_1_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_1_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_1_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  sab_2_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_2_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_2_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  sab_3_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_3_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_3_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  sab_4_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_4_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_4_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  sab_5_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_5_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  sab_5_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  ####################### DOMENICA
+  dom_1_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_1_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_1_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  dom_2_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_2_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_2_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  dom_3_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_3_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_3_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  dom_4_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_4_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_4_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+  dom_5_on_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_5_off_thermo:
+    pattern: '^[0-9]{2}:[0-9]{2}$'
+  dom_5_temp:
+    pattern: '^[0-9]{2}.[0-9]{1}$'
+
+input_datetime:
+  period_thermo_on:
+    name: Period Thermo Start
+    has_date: true
+    has_time: true
+  period_thermo_off:
+    name: Period Thermo Stop
+    has_date: true
+    has_time: true
+
+input_select:
+  thermo_zone:
+    name: Thermo Zone
+    icon: mdi:bed
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ####################### LUNEDI
+  lun_1_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  lun_2_zone:
+    # initial: Living
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  lun_3_zone:
+    # initial: All
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  lun_4_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  lun_5_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+      ####################### MARTEDI
+  mar_1_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  mar_2_zone:
+    # initial: Living
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  mar_3_zone:
+    # initial: All
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  mar_4_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  mar_5_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ####################### MERCOLEDI
+  mer_1_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  mer_2_zone:
+    # initial: Living
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  mer_3_zone:
+    # initial: All
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  mer_4_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  mer_5_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ####################### GIOVEDI
+  gio_1_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  gio_2_zone:
+    # initial: Living
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  gio_3_zone:
+    # initial: All
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  gio_4_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  gio_5_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ####################### VENERDI
+  ven_1_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ven_2_zone:
+    # initial: Living
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ven_3_zone:
+    # initial: All
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ven_4_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ven_5_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ####################### SABATO
+  sab_1_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  sab_2_zone:
+    # initial: Living
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  sab_3_zone:
+    # initial: All
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  sab_4_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  sab_5_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  ####################### DOMENICA
+  dom_1_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  dom_2_zone:
+    # initial: Living
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  dom_3_zone:
+    # initial: All
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  dom_4_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+  dom_5_zone:
+    # initial: Beds
+    options:
+      - Beds
+      - Living
+      - All
+      - None
+
+
+
+###########################################################################################################
+### CLIMATE
+###########################################################################################################
+climate:
+  - platform: generic_thermostat
+    name: Generic Thermo
+    heater: switch.shelly_shsw_1_xxxxxx
+    target_sensor: sensor.current_temp
+    min_temp: 17
+    max_temp: 22
+    ac_mode: false
+    min_cycle_duration:
+      seconds: 5
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    away_temp: 15
+    hot_tolerance: 0
+
+
+###########################################################################################################
+### SENSORS
+###########################################################################################################
+sensor:
+
+  ########################################################################
+  ### CURRENT TEMP, SETPOINT, ZONE
+  ########################################################################
+  - platform: template
+    sensors:
+      current_temp:
+        friendly_name: Thermo Current Temp
+        value_template: >-
+          {% if is_state('input_select.thermo_zone', 'Beds') %}
+            {{ states('sensor.avgtempbed') }}
+          {% elif is_state('input_select.thermo_zone', 'Living') %}
+              {{ states('sensor.avgtempliving') }}
+          {% else %}
+              {{states('sensor.avgtempall')}}
+          {% endif %}
+
+  - platform: template
+    sensors:
+      current_setpoint:
+        friendly_name: "Thermo Current SetPoint"
+        value_template: "{{ states('input_number.high_setpoint') }}"
+
+  - platform: template
+    sensors:
+      current_zone:
+        friendly_name: "Thermo Current Zone"
+        value_template: "{{ states('input_select.thermo_zone') }}"
+
+  ########################################################################
+  ### AVG TEMP
+  ########################################################################
+  - platform: min_max
+    name: AvgTempAll
+    type: mean
+    round_digits: 1
+    entity_ids:
+      - sensor.temperature_158d000xxxxxxx # SALA
+      - sensor.temperature_158d000xxxxxxx # INGRESSO
+      - sensor.temperature_158d000xxxxxxx # CUCINA
+      - sensor.temperature_158d000xxxxxxx # CAMERETTA
+      - sensor.temperature_158d000xxxxxxx # CAMERA
+
+  - platform: min_max
+    name: AvgTempBed
+    type: mean
+    round_digits: 1
+    entity_ids:
+      - sensor.temperature_158d000xxxxxxx # CAMERETTA
+      - sensor.temperature_158d000xxxxxxx # CAMERA
+
+  - platform: min_max
+    name: AvgTempLiving
+    type: mean
+    round_digits: 1
+    entity_ids:
+      - sensor.temperature_158d000xxxxxxx # SALA
+      - sensor.temperature_158d000xxxxxxx # INGRESSO
+      - sensor.temperature_158d000xxxxxxx # CUCINA
+
+  # ------------------------------------------
+  - platform: min_max
+    name: AvgHumAll
+    type: mean
+    round_digits: 1
+    entity_ids:
+      - sensor.humidity_158d000xxxxxxx # SALA
+      - sensor.humidity_158d000xxxxxxx # INGRESSO
+      - sensor.humidity_158d000xxxxxxx # CUCINA
+      - sensor.humidity_158d000xxxxxxx # CAMERETTA
+      - sensor.humidity_158d000xxxxxxx # CAMERA
+
+  - platform: min_max
+    name: AvgHumBed
+    type: mean
+    round_digits: 1
+    entity_ids:
+      - sensor.humidity_158d000xxxxxxx # CAMERETTA
+      - sensor.humidity_158d000xxxxxxx # CAMERA
+
+  - platform: min_max
+    name: AvgHumLiving
+    type: mean
+    round_digits: 1
+    entity_ids:
+      - sensor.humidity_158d000xxxxxxx # CAMERETTA
+      - sensor.humidity_158d000xxxxxxx # INGRESSO
+
+  ########################################################################
+  ### Thom Index: THI = Ta - (0.55 - 0.0055 * UR) (Ta - 14.5)
+  ########################################################################
+  - platform: template
+    sensors:
+      indice_thom:
+        friendly_name: "Thermohygrometric index (THI)"
+        value_template: "{{ (states('sensor.avgtempall')|float - (0.55 - 0.0055*states('sensor.avghumall')|float)*(states('sensor.avgtempall')|float - 14.5))|round(1) }}"
+
+  ########################################################################
+  ### THERMO Timer last 24
+  ########################################################################
+  - platform: history_stats
+    name: Thermo Switch (last 24h)
+    entity_id: switch.shelly_shsw_1_xxxxxx
+    state: 'on'
+    type: time
+    end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    duration:
+      hours: 24
+  
+  - platform: template
+    sensors:
+      template_thermo_switch_last_24h:
+        friendly_name: "Template Thermo Switch last 24h"
+        icon_template: "mdi:timer"
+        value_template: "{{ states('sensor.thermo_switch_last_24h') | multiply(3600) | timestamp_custom('%H:%M:%S', 0) }}"
+
+  ########################################################################
+  ### THERMO Timer Today
+  ########################################################################
+  - platform: history_stats
+    name: Thermo Switch Today
+    entity_id: switch.shelly_shsw_1_xxxxxx
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+
+  - platform: template
+    sensors:
+      template_thermo_switch_today:
+        friendly_name: "Template Thermo Switch today"
+        icon_template: "mdi:timer"
+        value_template: "{{ states('sensor.thermo_switch_today') | multiply(3600) | timestamp_custom('%H:%M:%S', 0) }}"
+
+
+
+  ########################################################################
+  ### LAST PERIOD THERMO ON
+  ########################################################################
+  - platform: template
+    sensors:
+      template_period_thermo:
+        friendly_name: "Last Period Thermo Switch ON"
+        icon_template: "mdi:timer"
+        value_template: >-
+          {{ ((state_attr('input_datetime.period_thermo_off', 'timestamp')) - (state_attr('input_datetime.period_thermo_on', 'timestamp'))) | int | timestamp_custom('%H:%M:%S', 0) }}
+
+  ########################################################################
+  ### THERMO Uptime
+  ########################################################################
+  - platform: template
+    sensors:
+      template_thermo_switch_uptime:
+        friendly_name: 'Template Thermo Switch Uptime'
+        icon_template: "mdi:timer"
+        value_template: >-
+  
+          {%- set time = states('sensor.shelly_shsw_1_76a12b_uptime') | int  %}
+          {%- set seconds = ((time % 60) // 1) %}
+          {%- set seconds = '{}s '.format(seconds) if seconds > 0 else '' %}
+          {%- set minutes = ((time % 3600) // 60) %}
+          {%- set minutes = '{}m '.format(minutes) if minutes > 0 else '' %}
+          {%- set hours = ((time % 86400) // 3600) %}
+          {%- set hours = '{}h '.format(hours) if hours > 0 else '' %}
+          {%- set days = (time // 86400) %}
+          {%- set days = '{}d '.format(days) if days > 0 else '' %}
+          {{ 'Less than 1 minute' if time < 60 else days + hours + minutes + seconds }} ago
+#
+  ########################################################################
+  ### Day of week
+  ########################################################################
+        
+  - platform: template
+    sensors:
+      dayoftheweek:
+        friendly_name: 'Day of Week'
+        value_template: "{{ now().strftime('%A') }}"
+
+###########################################################################################################
+### REST BINARY_SENSORS and COMMAND
+###########################################################################################################
+rest_command:
+  reboot_shelly_thermo:
+    url: 'http://10.10.1.50/reboot'
+
+script:
+  reboot_shelly_thermo:
+    alias: 'Shelly Thermo Reboot'
+    sequence:
+    - service: rest_command.reboot_shelly_thermo
+
+
+###########################################################################################################
+### AUTOMATION
+###########################################################################################################
+automation:
+  - alias: Thermo AUTO Mode start
+    initial_state: True
+    trigger:
+      - platform: homeassistant
+        event: start
+    condition:
+      condition: state
+      entity_id: input_boolean.auto_mode
+      state: 'on'
+    action:
+      - service: automation.turn_on
+        entity_id: automation.thermo_auto_mode
+
+  - alias: Thermo MANUAL Mode start
+    initial_state: True
+    trigger:
+      - platform: homeassistant
+        event: start
+    condition:
+      condition: state
+      entity_id: input_boolean.auto_mode
+      state: 'off'
+    action:
+      - service: automation.turn_on
+        entity_id: automation.thermo_manual_mode
+
+  - alias: Thermo AWAY Mode start
+    initial_state: True
+    trigger:
+      - platform: homeassistant
+        event: start
+    condition:
+      condition: state
+      entity_id: input_boolean.away_mode
+      state: 'on'
+    action:
+      - service: automation.turn_on
+        entity_id: automation.thermo_away_mode
+
+  ########################################################################
+  ### TIME PATTERN
+  ########################################################################
+  - alias: Thermo AUTO Mode
+    initial_state: False
+    trigger:
+      - platform: time_pattern
+        minutes: '/1'
+    action:
+      - service: python_script.scheduler_auto
+
+  - alias: Thermo MANUAL Mode
+    initial_state: False
+    trigger:
+      - platform: time_pattern
+        minutes: '/1'
+    condition:
+      condition: state
+      entity_id: input_boolean.away_mode
+      state: 'off'
+    action:
+      - service: climate.set_temperature
+        data_template:
+          entity_id: climate.generic_thermo
+          temperature: "{{ states('input_number.setpoint') }}"
+
+  - alias: Thermo AWAY Mode
+    initial_state: False
+    trigger:
+      - platform: time_pattern
+        minutes: '/1'
+    action:
+      - service: climate.set_temperature
+        data_template:
+          entity_id: climate.generic_thermo
+          temperature: "{{ states('input_number.setpoint') }}"
+
+  ########################################################################
+  ### GUI (AUTO - MANUAL - AWAY)
+  ########################################################################
+  - alias: Thermo AUTO Mode UI
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.auto_mode
+        from: "off"
+        to: "on"
+    action:
+      - service: python_script.scheduler_auto
+      - delay: '00:00:01'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.away_mode
+      - delay: '00:00:01'
+      - service: climate.turn_on
+        entity_id: climate.generic_thermo
+      - delay: '00:00:01'
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.weekend_on
+      - delay: '00:00:01'
+      - service: input_text.set_value
+        data:
+          entity_id: input_text.modality
+          value: "AUTO Mode"
+      - delay: '00:00:01'
+      - service: automation.turn_on
+        entity_id: automation.thermo_auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_manual_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_away_mode
+      - delay: '00:00:01'
+      - service: notify.telegram
+        data_template:
+          # title: '--- *AUTO mode* ---'
+          message: |-
+            
+            --- *AUTO mode* ---
+            AUTO mode activated
+            
+            state *AUTO Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_xxxxxx') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            state *Weekend At Home*: {{ states('input_boolean.weekend_on') }}
+            
+            ----------------------------------------------------------
+            *Zone set*: {{ states('sensor.current_zone') }}
+            *Temp set*: {{ states('sensor.current_temp') }} °C
+            
+            ----------------------------------------------------------
+            *Current SetPoint* (AUTO): {{ states('sensor.current_setpoint') }} °C
+            *Low SetPoint* (AUTO): {{ states('input_number.low_setpoint') }} °C
+            datetime: {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+
+  - alias: Thermo MANUAL Mode UI
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.auto_mode
+        from: "on"
+        to: "off"
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.away_mode
+      - delay: '00:00:01'
+      - service: climate.turn_on
+        entity_id: climate.generic_thermo
+      - delay: '00:00:01'
+      - service: input_text.set_value
+        data:
+          entity_id: input_text.modality
+          value: "MANUAL Mode"
+      - delay: '00:00:01'
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_zone
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_temp
+      - service: automation.turn_off
+        entity_id: automation.thermo_auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_on
+        entity_id: automation.thermo_manual_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_away_mode
+      - delay: '00:00:01'
+      - service: notify.telegram
+        data_template:
+          # title: '--- *MANUAL mode* ---'
+          message: |-
+            
+            --- *MANUAL mode* ---
+            MANUAL mode activated
+
+            state *AUTO Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_xxxxxx') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+
+            ----------------------------------------------------------
+            *Manual SetPoint*: {{ states('input_number.setpoint') }} °C
+            *Current Zone*: {{ states('sensor.current_zone') }}
+            *Current Temp*: {{ states('sensor.current_temp') }} °C
+            *Datetime*: {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+
+  - alias: Thermo AWAY Mode UI ON
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.away_mode
+        from: "off"
+        to: "on"
+    action:
+      - service: climate.turn_on
+        entity_id: climate.generic_thermo
+      - delay: '00:00:01'
+      - service: input_text.set_value
+        data:
+          entity_id: input_text.modality
+          value: "Away Mode"
+      - delay: '00:00:01'
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.thermo_zone
+          option: All
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.setpoint
+          value: 17.0
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_zone
+      - service: homeassistant.update_entity
+        entity_id: sensor.current_temp
+      - service: automation.turn_off
+        entity_id: automation.thermo_auto_mode
+      - delay: '00:00:01'
+      - service: automation.turn_off
+        entity_id: automation.thermo_manual_mode
+      - delay: '00:00:01'
+      - service: automation.turn_on
+        entity_id: automation.thermo_away_mode
+      - delay: '00:00:01'
+      - service: notify.telegram
+        data_template:
+          # title: '--- *Away mode* ---'
+          message: |-
+            
+            --- *Away mode* ---
+            Away mode activated
+            
+            state *Auto Mode*: {{ states('input_boolean.auto_mode') }}
+            state *Thermo Switch*: {{ states('switch.shelly_shsw_1_xxxxxx') }}
+            state *Climate Switch*: {{ states('climate.generic_thermo') }}
+            state *Away mode*: {{ states('input_boolean.away_mode') }}
+            
+            -----------------------------------------------------------------
+            *Current Zone*: {{ states('sensor.current_zone') }}
+            *Current Temp*: {{ states('sensor.current_temp') }} °C
+            Datetime: {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+
+  - alias: Thermo AWAY Mode UI OFF
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.away_mode
+        from: "on"
+        to: "off"
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.auto_mode
+
+  ########################################################################
+  ### WEEKEND
+  ########################################################################
+  - alias: WEEKEND_ON activated
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.weekend_on
+        from: "off"
+        to: "on"
+    condition:
+        condition: state
+        entity_id: input_boolean.away_mode
+        state: 'off'
+    action:
+      - delay: '00:00:01'
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.sab_switch_thermo
+      - delay: '00:00:01'
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.dom_switch_thermo
+      - delay: '00:00:10'
+      - service: notify.telegram
+        data_template:
+          title: '--- *WEEKEND_ON mode* ---'
+          message: |-
+            
+            WEEKEND_ON mode activated
+            input_boolean.weekend_on: {{ states('input_boolean.weekend_on') }}
+            datetime: {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+
+  - alias: WEEKEND_ON deactivated
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.weekend_on
+        from: "on"
+        to: "off"
+    condition:
+        condition: state
+        entity_id: input_boolean.away_mode
+        state: 'off'
+    action:
+      - delay: '00:00:01'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.sab_switch_thermo
+      - delay: '00:00:01'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.dom_switch_thermo
+      - delay: '00:00:10'
+      - service: notify.telegram
+        data_template:
+          title: '--- *WEEKEND_ON mode* ---'
+          message: |-
+            
+            WEEKEND_ON mode deactivated
+            input_boolean.weekend_on: {{ states('input_boolean.weekend_on') }}
+            {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+
+
+  ########################################################################
+  ### NOTIFY TELEGRAM ON - AUTO MODE
+  ########################################################################
+  - alias: Notify Thermo Switch ON AUTO
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: switch.shelly_shsw_1_xxxxxx
+        from: 'off'
+        to: 'on'
+      - platform: state
+        entity_id: climate.generic_thermo
+        from: 'off'
+        to: 'heat'
+    condition:
+        condition: state
+        entity_id: input_boolean.auto_mode
+        state: 'on'
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.period_thermo_on
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '--- *Thermo Switch/Climate start by scheduler* ---'
+          message: |-
+            
+            --- *Thermo Switch/Climate start by scheduler* ---
+            {{ "\U0001F525" }} *Thermo Switch ON*
+            in AUTO mode
+
+            ----------------------------------------------------------
+            Current SetPoint: {{ states('sensor.current_setpoint') }} °C
+            (Current temp: {{ states('sensor.current_temp') }} °C, {{ states('sensor.current_zone') }})
+            
+            state Thermo Switch: {{ states('switch.shelly_shsw_1_xxxxxx') }} at {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+
+  ########################################################################
+  ### NOTIFY TELEGRAM OFF - AUTO MODE
+  ########################################################################
+  - alias: Notify Thermo Switch OFF AUTO
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: switch.shelly_shsw_1_xxxxxx
+        from: 'on'
+        to: 'off'
+      - platform: state
+        entity_id: climate.generic_thermo
+        from: 'heat'
+        to: 'off'
+    condition:
+      condition: state
+      entity_id: input_boolean.auto_mode
+      state: 'on'
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.period_thermo_off
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+      - delay: '00:00:03'
+      - service: notify.telegram
+        data_template:
+          # title: '--- *Thermo Switch/Climate stop by scheduler* ---'
+          message: |-
+            
+            --- *Thermo Switch/Climate stop by scheduler* ---
+            {{ "\u2744\ufe0f" }} *Thermo Switch OFF*
+            in AUTO mode
+
+            ----------------------------------------------------------
+            Current SetPoint: {{ states('input_number.low_setpoint') }} °C
+            (current temp: {{ states('sensor.current_temp') }} °C, {{ states('sensor.current_zone') }})
+            
+            state Thermo Switch: {{ states('switch.shelly_shsw_1_xxxxxx') }} at {{ states('input_datetime.period_thermo_off') }}
+            
+            Period Thermo ON: {{ states('sensor.template_period_thermo') }}
