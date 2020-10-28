@@ -12,7 +12,6 @@
 
 ![Lovelace](https://i.imgur.com/IMMpP78.jpg)
 
-
    video: https://www.youtube.com/watch?v=lfGzzRBbqxs
 
 Italian Support: HassioHelp
@@ -24,6 +23,36 @@ Italian Support: HassioHelp
    WebSite https://hassiohelp.eu/2019/12/21/termostato-programmabile/
    
    Forum https://forum.hassiohelp.eu/d/515-termostato-programmabile-da-telegram
+
+After creating the zones, why not consider the reference temperatures for each zone?
+From here we started for the umpteenth update of the package.
+
+The operation of the thermostat was based on three variables:
+- boiler ignition time
+- shutdown time
+- reference zone, so as to be able to choose the target of the zone
+A fourth has been added to these three variables: the reference temperature.
+In this way, it is thought to be able to manage the thermostat in all its parts and for every subjective need.
+
+Some "trappings" used up to version 5.0 have been removed, making the code more streamlined.
+The boost mode has been eliminated. Now you don't need it anymore, just set the temperature in the desired period.
+The code of the telegram part has been revised, completely cleaned of unnecessary references, recalls and redundant parts and updated to the new sensors.
+The HIGH temperatures, one of the two reference temperatures together with the LOW, has been transformed into the setpoint temperature that is set at each period.
+the LOW remained unchanged.
+Rearrange the three modes AUTO, MANUAL and AWAY so that they all have the same behavior.
+AWAY mode is a MANUAL mode with fixed zone and setpoint.
+
+Disruption of the GUI.
+Calendar mode has been dropped.
+Both the picture-entity and the multi-row card have been replaced by a grid of button cards, with the full range of settings that this card makes available.
+The number of periods that can be used have been increased to 5, to increase the number of combinations during the day.
+Nothing prevents you from adding other periods as needed.
+Each line refers to the day of the week.
+In the column "dey week" the buttons activate and deactivate the programming for the whole day, keeping track of the current day for a better view.
+Each variable referred to the period (switch-on time, switch-off time, thermal zone, reference temperature) is activated when it is set. If left without value it is disabled.
+
+If you have any suggestions for the graphical interface, do not hesitate to contact me ... I am always available to find better solutions! ;)
+
 
 ## Version 5.0
 
