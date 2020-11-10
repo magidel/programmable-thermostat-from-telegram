@@ -25,9 +25,12 @@ Italian Support: HassioHelp
    Forum https://forum.hassiohelp.eu/d/515-termostato-programmabile-da-telegram
 
 - #### Added enhancement for viewing on tablet
-  The UI for viewing on tablets has been improved. The various buttons activate and deactivate the view of the columns for programming. Moreover, both the current day and time period are now highlighted
+  The UI for viewing on tablets has been improved. The various buttons activate and deactivate the view of the columns for programming.
 
-- #### Fixed an error on the python file about Low Setpoint
+- #### Added highlight on current event
+  Both the current day and time period are now highlighted
+
+- #### Fixed an minor error on the python file about LowSetpoint
 
 ## Version 6.0
 
