@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/Version-6.0-green)
+![Version](https://img.shields.io/badge/Version-6.5-green)
 [![Platform](https://img.shields.io/badge/Platform-Hassio-yellow)](https://www.home-assistant.io/hassio/installation/)
 [![hassiohelp](https://img.shields.io/badge/Forum-hassiohelp-blue)](https://hassiohelp.eu/2019/12/21/termostato-programmabile/)
 
@@ -8,11 +8,11 @@
 
 # Programmable thermostat from Telegram
 
-## Version 6.0
+## Version 6.5
 
-![Lovelace](https://i.imgur.com/IMMpP78.jpg)
+![Lovelace](https://i.imgur.com/IthVz9q.jpg)
 
-   video: https://youtu.be/yEF4qnM_ENA
+   video: https://www.youtube.com/watch?v=KuQIP6OYA7g
 
 Italian Support: HassioHelp
  
@@ -24,7 +24,16 @@ Italian Support: HassioHelp
    
    Forum https://forum.hassiohelp.eu/d/515-termostato-programmabile-da-telegram
 
+- #### Added enhancement for viewing on tablet
+  The UI for viewing on tablets has been improved. The various buttons activate and deactivate the view of the columns for programming. Moreover, both the current day and time period are now highlighted
 
+- #### Fixed an error on the python file about Low Setpoint
+
+## Version 6.0
+
+![Lovelace](https://i.imgur.com/IMMpP78.jpg)
+
+   video: https://youtu.be/yEF4qnM_ENA
 
 After creating the zones, why not consider the reference temperatures for each zone?
 From here we started for the umpteenth update of the package.
