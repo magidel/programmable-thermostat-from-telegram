@@ -32,6 +32,8 @@ Italian Support: HassioHelp
 
 - #### Fixed an minor error on the python file about LowSetpoint
 
+- #### Telegram part has not changed. Version 6.0 can be used.
+
 ## Version 6.0
 
 ![Lovelace](https://i.imgur.com/IMMpP78.jpg)
