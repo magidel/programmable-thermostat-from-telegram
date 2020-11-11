@@ -113,6 +113,7 @@ DOM_SCHEDULE_THERMO = schedule(DOM_SWITCH_THERMO, DOM_ON_THERMO, DOM_OFF_THERMO,
 ###########################################################################################################
 LOW_SETPOINT = hass.states.get('input_number.low_setpoint').state
 climate_entity = 'climate.generic_thermo'
+current_temp = hass.states.get(climate_entity).attributes['current_temperature']
 
 
 ###########################################################################################################
@@ -161,7 +162,6 @@ elif current_zone == 'Living':
 elif current_zone == 'All':
     current_temp = hass.states.get('sensor.avgtempall').state
 else:
-    current_temp = LOW_SETPOINT
     logger.info("current_zone not selected")
 
 #-----------------
