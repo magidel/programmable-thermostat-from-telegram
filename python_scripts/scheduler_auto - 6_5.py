@@ -161,6 +161,7 @@ elif current_zone == 'Living':
 elif current_zone == 'All':
     current_temp = hass.states.get('sensor.avgtempall').state
 else:
+    current_temp = LOW_SETPOINT
     logger.info("current_zone not selected")
 
 #-----------------
