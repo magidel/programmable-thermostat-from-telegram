@@ -12,7 +12,7 @@
 
 ![Lovelace](https://i.imgur.com/IthVz9q.jpg)
 
-   New video: https://www.youtube.com/watch?v=KuQIP6OYA7g
+   #### New video: https://www.youtube.com/watch?v=KuQIP6OYA7g
 
 Italian Support: HassioHelp
  
